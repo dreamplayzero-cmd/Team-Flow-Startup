@@ -1,0 +1,45 @@
+# TASK CHECKLIST (MZ 상권분석 앱)
+
+## 🏗 기초 환경 설정
+- [x] CLAUDE.md 초기화
+- [x] MZ_APP_MASTER_PLAN.md 수립 (비즈니스 로직 박제)
+- [x] TASK_CHECKLIST.txt 업데이트
+- [x] UPDATE_LOG.txt 초기화
+- [x] senior_developer_tips.txt 초기화
+
+## 💾 데이터베이스 설계 및 구현
+- [x] SQLite 데이터베이스 스키마 정의 (6대 핵심 테이블)
+- [x] 관계 설정 (Foreign Keys) 및 인덱스 최적화
+- [x] DatabaseManager 클래스 구현
+- [x] SQL Injection 방지 및 `area_name` 매핑 동기화
+
+## ⚙️ 데이터 수집 모듈 (Phase 1)
+- [x] 행안부 인구 데이터 API 수집기 개발 (`core/collectors/pop_collector.py`)
+- [x] 소상공인 상가 정보 API 파이프라인 개발 (`core/collectors/store_collector.py`)
+- [x] 블로그 크롤링 및 정제 모듈 개발 (`core/collectors/blog_crawler.py`)
+- [x] 네이버 검색 API 연동 모듈 개발 (`core/collectors/naver_collector.py`)
+- [x] [CSV Data Architecture] 대용량 물리적 상가 CSV 임포트 모듈 (`core/collectors/csv_importer.py`) 구축
+
+## 🧠 분석 및 통합 (Phase 2)
+- [x] 상권별 점수 산출(Scoring) 알고리즘 구현 (`core/engine/scoring_engine.py`)
+- [x] 창업자 조건 기반 동적 가중치 알고리즘 체계 구축
+- [x] 사용자 입력 조건 DB 영구 기록 연동 (`founder_inputs`)
+- [x] Dual Architecture: 실시간 API + Fallback + Override Override 점수 교정 엔진 구축
+
+## 🖥 UI/UX (Phase 3)
+- [x] PySide6 기반 다크 모드 스타일 시트 정의 (`ui/styles.py`)
+- [x] 창업자 맞춤 조건 및 지역 동시 선택 UI 구현 (`ui/input_view.py`)
+- [x] 다중 상권 랭킹 매핑 및 결과 시각화 (`ui/result_view.py`)
+- [x] 관리자 대시보드 내 "단절 모드 (CSV 수동 주입)" UI 개발 
+
+## 🚀 자동화 및 스케줄러 (Phase 4)
+- [x] 데이터 백그라운드 수집 워커(`core/workers.py`) 
+- [x] 백그라운드 수동 파일 적재 시스템 (`CsvImportWorker`) 탑재
+- [x] 관리자 명령에 의한 백그라운드 실시간 동기화 상태 연결 
+
+## 🔒 사용자 분리 시스템 (Phase 5 - 진행 예정)
+- [x] 앱 첫 기동 시 `LoginView` 유저/관리자 분기 처리 화면
+- [x] `AdminDashboardView` 백그라운드 수집 / CSV 파일 업로드
+- [x] `UserDashboardView` 일반 창업자 전용 입력창 분리
+- [ ] PyInstaller를 통한 실행 파일(.exe) 독립 빌드 
+- [ ] 데이터베이스 백업 툴셋 추가

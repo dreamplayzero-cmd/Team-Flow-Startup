@@ -1,0 +1,145 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+@theme {
+  --color-background: #111417;
+  --color-surface: #111417;
+  --color-surface-dim: #111417;
+  --color-surface-bright: #37393d;
+  --color-surface-container-lowest: #0b0e11;
+  --color-surface-container-low: #191c1f;
+  --color-surface-container: #1d2023;
+  --color-surface-container-high: #272a2e;
+  --color-surface-container-highest: #323538;
+  --color-outline: #88919d;
+  --color-outline-variant: #3f4852;
+  --color-on-surface: #e1e2e7;
+  --color-on-surface-variant: #bec7d4;
+  --color-primary: #98cbff;
+  --color-primary-container: #00a3ff;
+  --color-on-primary: #003354;
+  --color-on-primary-container: #00375a;
+
+  /* Stitch Login Theme Colors - Modern Luxury Marble */
+  --color-stitch-primary: #342E2E;
+  --color-stitch-primary-container: #5D4333;
+  --color-stitch-background: #FDFBF7;
+  --color-stitch-surface: #faf8ff;
+  --color-stitch-on-surface: #131b2e;
+  --color-stitch-on-surface-variant: #444650;
+  --color-stitch-surface-container-lowest: #FFFFFF;
+  --color-stitch-surface-container-low: #F6F4F0;
+  --color-stitch-surface-container: #F0EDE9;
+  --color-stitch-surface-container-high: #EAE5E0;
+  --color-stitch-surface-container-highest: #dae2fd;
+  --color-stitch-outline: #747781;
+  --color-stitch-outline-variant: #c4c6d2;
+  --color-stitch-secondary: #006c49;
+  --color-stitch-secondary-container: #6cf8bb;
+
+  --font-headline: "Space Grotesk", sans-serif;
+  --font-st-headline: "Manrope", sans-serif;
+  --font-serif-luxury: "Playfair Display", serif;
+  --font-body: "Inter", sans-serif;
+  --font-label: "Inter", sans-serif;
+
+  --animate-glow: glow 2s ease-in-out infinite alternate;
+
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 10px #6366f1, 0 0 20px #6366f1;
+    }
+
+    to {
+      box-shadow: 0 0 20px #818cf8, 0 0 40px #818cf8;
+    }
+  }
+}
+
+:root {
+  background-color: #0a0a0c;
+  color: white;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  input {
+    @apply bg-surface-container-highest border-none outline-none focus:ring-1 focus:ring-primary-container transition-all;
+  }
+}
+
+.glass-card {
+  background: rgba(29, 32, 35, 0.4);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(152, 203, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glow-primary {
+  box-shadow: 0 0 20px rgba(0, 163, 255, 0.15);
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.sensible-long-shadow {
+  /* Connected dark grey shadow to the bottom right */
+  text-shadow: 
+    1px 1px 0px #4B5563,
+    2px 2px 0px #4B5563,
+    3px 3px 0px #4B5563,
+    4px 4px 0px #4B5563,
+    5px 5px 0px #4B5563,
+    6px 6px 0px #4B5563,
+    7px 7px 0px #4B5563,
+    8px 8px 0px #4B5563;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.cyber-border {
+  position: relative;
+  border: 1px solid rgba(165, 180, 252, 0.1);
+}
+
+.cyber-border::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-top: 1px solid #a5b4fc;
+  border-left: 1px solid #a5b4fc;
+}
+
+.cyber-border::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  border-bottom: 1px solid #a5b4fc;
+  border-right: 1px solid #a5b4fc;
+}

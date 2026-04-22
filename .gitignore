@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+*.log
+
+# Node / React
+node_modules/
+dist/
+build/
+.eslintcache
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store
+
+# Pencil / Design files (if huge or unwanted)
+# *.pen 
