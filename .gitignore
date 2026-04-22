@@ -1,15 +1,23 @@
 # Python
-__pycache__/
-*.py[cod]
-*$py.class
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
 venv/
+**/venv/
 .env
-*.log
+**/*.log
+
+# Project Files
+**/data/*.db
+**/data/*.db-journal
 
 # Node / React
 node_modules/
+**/node_modules/
 dist/
+**/dist/
 build/
+**/build/
 .eslintcache
 
 # IDEs
@@ -17,5 +25,5 @@ build/
 .idea/
 .DS_Store
 
-# Pencil / Design files (if huge or unwanted)
-# *.pen 
+# Pencil / Design files
+*.pen
