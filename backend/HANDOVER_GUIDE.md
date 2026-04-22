@@ -92,4 +92,3 @@ pro1/
 
 ---
 **기획 및 초기 개발**: JINI (Tech Lead)
-**문의**: jini0107 (Repository Admin)
