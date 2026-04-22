@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import List, Optional
 import os
@@ -13,6 +14,11 @@ from config.settings import AREA_MAP
 from core.engine.category_master import CategoryMaster
 
 app = FastAPI()
+
+# Mount assets folder to serve static files (Visual DNA images)
+assets_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets")
+if os.path.exists(assets_path):
+    app.mount("/assets", StaticFiles(directory=assets_path), name="assets")
 
 # Enable CORS for frontend
 app.add_middleware(

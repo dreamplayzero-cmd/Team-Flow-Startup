@@ -1,5 +1,18 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 
+interface AnalysisReport {
+    area_name: string;
+    final_score: number;
+    success_prob: number;
+    positives: string[];
+    risks: string[];
+    dna_result?: {
+        tone: string;
+        image_path: string;
+        description?: string;
+    };
+}
+
 interface AnalysisState {
     formData: {
         age: number;
@@ -12,7 +25,7 @@ interface AnalysisState {
         op_time: string;
         areas: string[];
     };
-    results: any[] | null;
+    results: AnalysisReport[] | null;
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
 }

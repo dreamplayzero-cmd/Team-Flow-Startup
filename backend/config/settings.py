@@ -1,8 +1,15 @@
 import os
+import sys
 from pathlib import Path
 
+# [NEW] Handle PyInstaller's bundle directory
+if getattr(sys, 'frozen', False):
+    BUNDLE_DIR = Path(sys._MEIPASS)
+else:
+    BUNDLE_DIR = Path(__file__).resolve().parent.parent
+
 # Base directory
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = BUNDLE_DIR
 
 # Database configuration
 DB_DIR = BASE_DIR / "data"
@@ -17,8 +24,10 @@ LOG_FILE = LOG_DIR / "app.log"
 SCHEMA_DIR = DB_DIR
 
 # Ensure directories exist
-os.makedirs(LOG_DIR, exist_ok=True)
-os.makedirs(DB_DIR, exist_ok=True)
+if not getattr(sys, 'frozen', False):
+    os.makedirs(LOG_DIR, exist_ok=True)
+    os.makedirs(DB_DIR, exist_ok=True)
+
 
 # ============================================================
 # [AREA_MAP] 단일 진실 공급원 (Single Source of Truth)
