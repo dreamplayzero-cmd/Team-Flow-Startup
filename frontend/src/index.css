@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 @theme {
   --color-background: #111417;
@@ -37,12 +36,42 @@
   --color-stitch-secondary: #006c49;
   --color-stitch-secondary-container: #6cf8bb;
 
+  /* ─────────────────────────────────────────────────────
+   * 🌙 DARK THEME PALETTE (분석 몰입 영역 전용)
+   * 규칙: Dark 페이지(DistrictReportPage)에서는
+   *       stitch-* 변수 사용 금지. 아래 --dark-* 변수
+   *       또는 inline style hex 값으로 직접 명시할 것.
+   * ─────────────────────────────────────────────────────
+   */
+  --dark-bg-base: #0f1115;
+  /* 최하단 배경 */
+  --dark-bg-surface: #16191e;
+  /* 카드·패널 배경 */
+  --dark-bg-sidebar: #13161b;
+  /* 사이드바 배경 */
+  --dark-accent: #64d2ff;
+  /* 주 강조색 (사이언-블루) */
+  --dark-accent-green: #4ade80;
+  /* 성공·긍정 지표 */
+  --dark-accent-gold: #fbbf24;
+  /* 프리미엄·주의 지표 */
+  --dark-accent-red: #f87171;
+  /* 위험·리스크 */
+  --dark-text-primary: rgba(255, 255, 255, 0.9);
+  /* 주 텍스트 */
+  --dark-text-secondary: rgba(255, 255, 255, 0.5);
+  /* 보조 텍스트 */
+  --dark-border: rgba(255, 255, 255, 0.08);
+  /* 카드 테두리 */
+
+  /* ── Fonts ── */
   --font-headline: "Space Grotesk", sans-serif;
   --font-st-headline: "Manrope", sans-serif;
   --font-serif-luxury: "Playfair Display", serif;
   --font-body: "Inter", sans-serif;
   --font-label: "Inter", sans-serif;
 
+  /* ── Animations ── */
   --animate-glow: glow 2s ease-in-out infinite alternate;
 
   @keyframes glow {
@@ -102,7 +131,7 @@ body {
 
 .sensible-long-shadow {
   /* Connected dark grey shadow to the bottom right */
-  text-shadow: 
+  text-shadow:
     1px 1px 0px #4B5563,
     2px 2px 0px #4B5563,
     3px 3px 0px #4B5563,

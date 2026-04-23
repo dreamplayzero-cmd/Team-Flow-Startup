@@ -8,15 +8,15 @@ interface LoginPageProps {
 
 export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     return (
-        <div className="bg-stitch-background text-stitch-on-surface min-h-screen w-full flex flex-col relative overflow-x-hidden font-body selection:bg-stitch-primary/10">
+        <div className="bg-white text-gray-900 min-h-screen w-full flex flex-col relative overflow-x-hidden font-body selection:bg-stitch-primary/10">
             {/* Background Pattern - Fixed to cover entire screen */}
             <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
                 <img
-                    className="w-full h-full object-cover opacity-60 scale-100"
+                    className="w-full h-full object-cover opacity-30 scale-100"
                     alt="Luxury marble background"
                     src={luxuryMarbleBg}
                 />
-                <div className="absolute inset-0 bg-gradient-to-tr from-stitch-background/60 via-transparent to-stitch-primary/10"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-white/90 via-white/60 to-stitch-primary/5"></div>
             </div>
 
             <main className="relative z-10 min-h-screen w-full flex flex-col items-center justify-center py-12 px-6 md:px-12 lg:px-16 xl:px-24">

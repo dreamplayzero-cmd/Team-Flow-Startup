@@ -248,35 +248,35 @@ export const BusinessPlanPage: React.FC<BusinessPlanPageProps> = ({ onBack, onNe
                                         <span className="font-st-headline font-bold text-lg uppercase tracking-tight">AI 추천 전략 프리뷰</span>
                                     </div>
                                     <div className="space-y-8">
-                                        <div className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl border border-white/10">
-                                            <div className="text-[10px] text-stitch-on-primary-container uppercase tracking-[0.2em] font-black mb-2 opacity-60">추천 상권/업종</div>
+                                        <div className="p-6 rounded-2xl border border-white/20" style={{ background: 'rgba(30,16,8,0.7)' }}>
+                                            <div className="text-[10px] uppercase tracking-[0.2em] font-black mb-2 text-white/50">추천 상권/업종</div>
                                             <div className="font-st-headline font-bold text-2xl mb-3 text-white">프리미엄 무인 소매점</div>
                                             <p className="text-xs text-white/70 leading-relaxed font-medium">
                                                 현재 선택하신 '소매업'과 '오토 운영' 방식을 결합했을 때, 30-40대 직장인을 타겟으로 한 프리미엄 무인 샵이 가장 높은 수익률(18%)을 보일 것으로 예측됩니다.
                                             </p>
                                         </div>
                                         <div className="grid grid-cols-2 gap-4">
-                                            <div className="bg-white/5 p-5 rounded-2xl border border-white/5">
-                                                <div className="text-[9px] text-stitch-secondary-fixed-dim font-black uppercase tracking-widest mb-2">예상 수익률 (ROI)</div>
-                                                <div className="text-3xl font-black font-st-headline text-stitch-secondary-fixed-dim">24.5%</div>
+                                            <div className="p-5 rounded-2xl border border-white/20" style={{ background: 'rgba(30,16,8,0.7)' }}>
+                                                <div className="text-[9px] font-black uppercase tracking-widest mb-3 text-white/50">예상 수익률 (ROI)</div>
+                                                <div className="text-3xl font-black font-st-headline" style={{ color: '#a8edbb' }}>24.5%</div>
                                             </div>
-                                            <div className="bg-white/5 p-5 rounded-2xl border border-white/5">
-                                                <div className="text-[9px] text-stitch-tertiary-fixed-dim font-black uppercase tracking-widest mb-2">리스크 수준</div>
-                                                <div className="text-3xl font-black font-st-headline text-stitch-tertiary-fixed-dim uppercase">낮음</div>
+                                            <div className="p-5 rounded-2xl border border-white/20" style={{ background: 'rgba(30,16,8,0.7)' }}>
+                                                <div className="text-[9px] font-black uppercase tracking-widest mb-3 text-white/50">리스크 수준</div>
+                                                <div className="text-3xl font-black font-st-headline uppercase" style={{ color: '#fde68a' }}>낮음</div>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="pt-6 border-t border-white/10">
                                         <div className="flex items-center justify-between mb-4 text-xs font-bold uppercase tracking-widest">
                                             <span className="opacity-60">실행 가능성 분석</span>
-                                            <span className="text-stitch-secondary-fixed-dim font-black">89%</span>
+                                            <span className="font-black" style={{ color: '#a8edbb' }}>89%</span>
                                         </div>
                                         <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden">
                                             <motion.div
                                                 initial={{ width: 0 }}
                                                 animate={{ width: '89%' }}
                                                 transition={{ duration: 1, delay: 0.5 }}
-                                                className="bg-stitch-secondary-fixed-dim h-full rounded-full"
+                                                className="h-full rounded-full" style={{ background: '#a8edbb' }}
                                             ></motion.div>
                                         </div>
                                     </div>

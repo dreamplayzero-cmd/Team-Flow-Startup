@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface AnalysisState {
     formData: {
@@ -12,7 +13,7 @@ interface AnalysisState {
         op_time: string;
         areas: string[];
     };
-    results: any[] | null;
+    results: Record<string, number> | null;
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
 }

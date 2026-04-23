@@ -13,19 +13,21 @@ export const DistrictLeaderboardPage: React.FC<DistrictLeaderboardPageProps> = (
     const dispatch = useAppDispatch();
     const results = useAppSelector(state => state.analysis.results);
 
-    const sortedResults = Object.entries(results)
+    const sortedResults = Object.entries(results ?? {})
         .map(([name, score]) => ({
             name,
             score: parseFloat(score.toFixed(1)),
-            prob: Math.round(score + 5), // Mocking probability based on score for now
+            prob: Math.round(score + 5),
             id: name
         }))
         .sort((a, b) => b.score - a.score);
 
-    // Default placeholders if results are empty
     const rank1 = sortedResults[0] || { name: '샤로수길', score: 85.9, prob: 92, id: 'sharo' };
     const rank2 = sortedResults[1] || { name: '성수동', score: 78.4, prob: 76, id: 'seongsu' };
     const rank3 = sortedResults[2] || { name: '망원동', score: 72.1, prob: 64, id: 'mangwon' };
+
+    const displayResults = sortedResults.length > 0 ? sortedResults : [rank1, rank2, rank3];
+
     return (
         <div className="bg-stitch-background text-stitch-on-surface min-h-screen flex selection:bg-stitch-primary/10 font-body">
             {/* Sidebar Navigation */}
@@ -36,7 +38,7 @@ export const DistrictLeaderboardPage: React.FC<DistrictLeaderboardPageProps> = (
                     </div>
                     <div>
                         <h2 className="font-st-headline font-extrabold text-stitch-primary text-sm leading-tight">인사이트 엔진</h2>
-                        <p className="text-[10px] font-bold text-stitch-on-surface-variant/60 uppercase tracking-widest leading-none mt-1 font-black">전략 레이어</p>
+                        <p className="text-[10px] font-bold text-stitch-on-surface-variant/60 uppercase tracking-widest leading-none mt-1">전략 레이어</p>
                     </div>
                 </div>
 
@@ -81,17 +83,16 @@ export const DistrictLeaderboardPage: React.FC<DistrictLeaderboardPageProps> = (
 
             {/* Main Content Area */}
             <div className="flex-1 lg:pl-64 transition-all w-full flex flex-col">
-                {/* TopNavBar */}
                 <TopNavBar onLogoClick={onBack} offsetSidebar={true} />
 
                 <main className="flex-1 pt-28 pb-20 px-10 max-w-[1440px] mx-auto w-full">
-                    {/* Header Section */}
+                    {/* Header */}
                     <header className="mb-16 flex flex-col lg:flex-row lg:items-end justify-between gap-12">
                         <div className="max-w-2xl">
                             <motion.span
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                className="text-stitch-primary font-st-headline font-extrabold uppercase tracking-[0.2em] text-[10px] mb-4 block flex items-center gap-2"
+                                className="text-stitch-primary font-st-headline font-extrabold uppercase tracking-[0.2em] text-[10px] mb-4 flex items-center gap-2"
                             >
                                 <span className="w-2 h-2 rounded-full bg-stitch-primary animate-pulse"></span>
                                 District_Analysis_Leaderboard
@@ -106,7 +107,7 @@ export const DistrictLeaderboardPage: React.FC<DistrictLeaderboardPageProps> = (
                             </motion.h1>
                         </div>
 
-                        {/* Final Conclusion Box */}
+                        {/* Conclusion Box */}
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
@@ -132,7 +133,7 @@ export const DistrictLeaderboardPage: React.FC<DistrictLeaderboardPageProps> = (
 
                     {/* Rank Cards Section */}
                     <section className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-20">
-                        {/* Rank #1: Sharosu-gil */}
+                        {/* Rank #1 */}
                         <motion.div
                             whileHover={{ y: -10, scale: 1.02 }}
                             onClick={onShowReport}
@@ -142,16 +143,16 @@ export const DistrictLeaderboardPage: React.FC<DistrictLeaderboardPageProps> = (
                                 <span className="material-symbols-outlined text-[300px] font-black">looks_one</span>
                             </div>
                             <div className="flex justify-between items-start mb-16 z-10">
-                                <span className="bg-stitch-secondary text-stitch-primary px-6 py-2 rounded-full text-[12px] font-black tracking-[0.2em] uppercase shadow-lg shadow-stitch-secondary/10">순위 #1</span>
+                                <span className="bg-stitch-secondary text-stitch-primary px-6 py-2 rounded-full text-[12px] font-black tracking-[0.2em] uppercase shadow-lg">순위 #1</span>
                                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center animate-bounce">
                                     <span className="material-symbols-outlined text-stitch-secondary font-black">trending_up</span>
                                 </div>
                             </div>
-                            <h2 className="text-5xl font-st-headline font-black mb-2 z-10 tracking-tight">샤로수길</h2>
+                            <h2 className="text-5xl font-st-headline font-black mb-2 z-10 tracking-tight">{rank1.name}</h2>
                             <p className="text-white/40 text-[10px] mb-12 z-10 font-black uppercase tracking-widest">관악구 관악로 14길</p>
                             <div className="mb-12 z-10">
-                                <div className="text-9xl font-st-headline font-black mb-2 tracking-tighter flex items-end gap-2 drop-shadow-[0_0_20px_rgba(78,222,163,0.3)]">
-                                    85.9
+                                <div className="text-9xl font-st-headline font-black mb-2 tracking-tighter drop-shadow-[0_0_20px_rgba(78,222,163,0.3)]">
+                                    {rank1.score}
                                 </div>
                                 <p className="text-stitch-secondary text-sm font-black flex items-center gap-3 uppercase tracking-widest">
                                     AI 성공 가능성 지수
@@ -164,13 +165,13 @@ export const DistrictLeaderboardPage: React.FC<DistrictLeaderboardPageProps> = (
                             <div className="mt-auto flex justify-between items-end z-10">
                                 <div>
                                     <span className="text-[10px] text-white/30 block mb-2 font-black uppercase tracking-widest">성공 확률</span>
-                                    <span className="text-5xl font-st-headline font-black text-stitch-secondary tracking-tighter">92%</span>
+                                    <span className="text-5xl font-st-headline font-black text-stitch-secondary tracking-tighter">{rank1.prob}%</span>
                                 </div>
                                 <span className="material-symbols-outlined text-stitch-secondary/40 text-6xl" style={{ fontVariationSettings: "'FILL' 1" }}>rocket_launch</span>
                             </div>
                         </motion.div>
 
-                        {/* Rank #2: Seongsu-dong */}
+                        {/* Rank #2 */}
                         <motion.div
                             whileHover={{ y: -10 }}
                             onClick={onShowReport}
@@ -179,28 +180,25 @@ export const DistrictLeaderboardPage: React.FC<DistrictLeaderboardPageProps> = (
                             <div className="absolute -top-16 -right-16 opacity-5">
                                 <span className="material-symbols-outlined text-[300px] font-black text-stitch-primary">looks_two</span>
                             </div>
-                            <div className="flex justify-between items-start mb-16 z-10">
-                                   <h2 className="text-5xl font-st-headline font-black text-stitch-primary mb-2 z-10 tracking-tight">{rank2.name}</h2>
-                            <p className="text-stitch-on-surface-variant/40 text-[10px] mb-12 z-10 font-black uppercase tracking-widest tracking-tight">분석 대상 지역 #2</p>
+                            <div className="flex justify-between items-start mb-4 z-10">
+                                <span className="bg-stitch-surface-container-low text-stitch-primary px-6 py-2 rounded-full text-[12px] font-black tracking-[0.2em] uppercase">순위 #2</span>
+                            </div>
+                            <h2 className="text-5xl font-st-headline font-black text-stitch-primary mb-2 z-10 tracking-tight">{rank2.name}</h2>
+                            <p className="text-stitch-on-surface-variant/40 text-[10px] mb-12 z-10 font-black uppercase tracking-widest">분석 대상 지역 #2</p>
                             <div className="mb-12 z-10">
                                 <div className="text-9xl font-st-headline font-black text-stitch-primary mb-2 tracking-tighter">{rank2.score}</div>
                                 <p className="text-stitch-on-surface-variant font-black text-sm uppercase tracking-widest">AI Feasibility Score</p>
                             </div>
                             <div className="bg-stitch-surface-container-low/60 p-6 rounded-2xl mb-10 z-10 border border-stitch-outline-variant/10">
-                                <p className="text-sm italic leading-relaxed text-stitch-on-surface-variant font-medium">상권 데이터 분석 결과, 안정적인 소비 유입이 확인되었으며 창업 아이템과의 적합도가 높게 나타났습니다.</p>
+                                <p className="text-sm italic leading-relaxed text-stitch-on-surface-variant font-medium">"고가 소비층의 유입이 지속적으로 유지되는 중입니다."</p>
                             </div>
                             <div className="mt-auto z-10">
                                 <span className="text-[10px] text-stitch-on-surface-variant/30 block mb-2 font-black uppercase tracking-widest">성공 확률</span>
                                 <span className="text-5xl font-st-headline font-black text-stitch-primary tracking-tighter">{rank2.prob}%</span>
-�� 고가 소비층의 유입이 지속적으로 유지되는 중입니다."</p>
-                            </div>
-                            <div className="mt-auto z-10">
-                                <span className="text-[10px] text-stitch-on-surface-variant/30 block mb-2 font-black uppercase tracking-widest">성공 확률</span>
-                                <span className="text-5xl font-st-headline font-black text-stitch-primary tracking-tighter">76%</span>
                             </div>
                         </motion.div>
 
-                        {/* Rank #3: Mangwon-dong */}
+                        {/* Rank #3 */}
                         <motion.div
                             whileHover={{ y: -10 }}
                             onClick={onShowReport}
@@ -208,76 +206,63 @@ export const DistrictLeaderboardPage: React.FC<DistrictLeaderboardPageProps> = (
                         >
                             <div className="absolute -top-16 -right-16 opacity-5">
                                 <span className="material-symbols-outlined text-[300px] font-black text-stitch-primary">looks_3</span>
-                                          <h2 className="text-5xl font-st-headline font-black text-stitch-primary mb-2 z-10 tracking-tight">{rank3.name}</h2>
-                            <p className="text-stitch-on-surface-variant/40 text-[10px] mb-12 z-10 font-black uppercase tracking-widest tracking-tight">분석 대상 지역 #3</p>
+                            </div>
+                            <div className="flex justify-between items-start mb-4 z-10">
+                                <span className="bg-stitch-surface-container-low text-stitch-primary px-6 py-2 rounded-full text-[12px] font-black tracking-[0.2em] uppercase">순위 #3</span>
+                            </div>
+                            <h2 className="text-5xl font-st-headline font-black text-stitch-primary mb-2 z-10 tracking-tight">{rank3.name}</h2>
+                            <p className="text-stitch-on-surface-variant/40 text-[10px] mb-12 z-10 font-black uppercase tracking-widest">분석 대상 지역 #3</p>
                             <div className="mb-12 z-10">
                                 <div className="text-9xl font-st-headline font-black text-stitch-primary mb-2 tracking-tighter">{rank3.score}</div>
                                 <p className="text-stitch-on-surface-variant font-black text-sm uppercase tracking-widest">AI Feasibility Score</p>
                             </div>
                             <div className="bg-stitch-surface-container-low/60 p-6 rounded-2xl mb-10 z-10 border border-stitch-outline-variant/10">
-                                <p className="text-sm italic leading-relaxed text-stitch-on-surface-variant font-medium">지역 내 고정 수요층이 확보되어 있으며, 트렌드 민감도가 적절히 조화를 이루는 견고한 상권입니다.</p>
+                                <p className="text-sm italic leading-relaxed text-stitch-on-surface-variant font-medium">"로컬 커뮤니티 기반의 안정적 수요. 경쟁 강도가 높아지고 있으나 독창적인 컨셉의 매장은 여전히 강세."</p>
                             </div>
                             <div className="mt-auto z-10">
                                 <span className="text-[10px] text-stitch-on-surface-variant/30 block mb-2 font-black uppercase tracking-widest">성공 확률</span>
                                 <span className="text-5xl font-st-headline font-black text-stitch-primary tracking-tighter">{rank3.prob}%</span>
-xed text-stitch-on-surface-variant font-medium">"로컬 커뮤니티 기반의 안정적 수요. 경쟁 강도가 높아지고 있으나 독창적인 컨셉의 매장은 여전히 강세."</p>
-                            </div>
-                            <div className="mt-auto z-10">
-                                <span className="text-[10px] text-stitch-on-surface-variant/30 block mb-2 font-black uppercase tracking-widest">성공 확률</span>
-                                <span className="text-5xl font-st-headline font-black text-stitch-primary tracking-tighter">64%</span>
                             </div>
                         </motion.div>
                     </section>
 
                     {/* Analytics Section */}
                     <section className="grid grid-cols-1 lg:grid-cols-5 gap-10">
-                        {/* Comparative Success Probability Dashboard */}
+                        {/* Probability Bar Chart */}
                         <div className="lg:col-span-3 bg-stitch-surface-container-low/40 backdrop-blur-3xl rounded-[3rem] p-12 border border-white shadow-xl">
-                            <div className="flex justify-between items-center mb-16">
-                                <div>
-                                    <h3 className="font-st-headline font-black text-3xl text-stitch-primary flex items-center gap-4">
-                                        전 지역 성공 확률 비교 분석
-                                        <span className="material-symbols-outlined text-stitch-primary text-2xl animate-pulse">equalizer</span>
-                                    </h3>
-                                    <p className="text-xs font-black text-stitch-on-surface-variant/40 uppercase tracking-[0.2em] mt-2">Comparative Success Probability Dashboard</p>
-                                </div>
-                                <div className="flex gap-8">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-3 h-3 rounded-full bg-stitch-primary"></div>
-                                        <span className="text-[10px]                                  {sortedResults.slice(0, 5).map((item, idx) => (
-                                    <div key={idx} className="group cursor-pointer">
-                                        <div className="flex justify-between items-end mb-4">
-                                            <div className="flex items-center gap-4">
-                                                <span className="text-xl font-black text-stitch-primary font-st-headline">{item.name}</span>
-                                                <span className={`material-symbols-outlined ${idx === 0 ? 'text-stitch-secondary' : 'text-stitch-outline-variant'} text-sm ${idx === 0 ? 'animate-bounce' : ''}`}>north</span>
+                            <div className="mb-12">
+                                <h3 className="font-st-headline font-black text-3xl text-stitch-primary flex items-center gap-4">
+                                    전 지역 성공 확률 비교 분석
+                                    <span className="material-symbols-outlined text-stitch-primary text-2xl animate-pulse">equalizer</span>
+                                </h3>
+                                <p className="text-xs font-black text-stitch-on-surface-variant/40 uppercase tracking-[0.2em] mt-2">Comparative Success Probability Dashboard</p>
+                            </div>
+                            <div className="space-y-6">
+                                {displayResults.slice(0, 5).map((item, idx) => (
+                                    <div key={item.id} className="group cursor-pointer">
+                                        <div className="flex justify-between items-end mb-3">
+                                            <div className="flex items-center gap-3">
+                                                <span className="text-lg font-black text-stitch-primary font-st-headline">{item.name}</span>
+                                                <span className={`material-symbols-outlined text-sm ${idx === 0 ? 'text-stitch-secondary animate-bounce' : 'text-stitch-outline-variant'}`}>north</span>
                                             </div>
-                                            <span className="text-3xl font-st-headline font-black text-stitch-primary tracking-tighter">{item.prob}%</span>
-tems-end mb-4">
-                                            <div className="flex items-center gap-4">
-                                                <span className="text-xl font-black text-stitch-primary font-st-headline">{item.name}</span>
-                                                <span className={`material-symbols-outlined ${item.color} text-sm ${item.trend === 'north' ? 'animate-bounce' : ''}`}>{item.trend}</span>
-                                            </div>
-                                            <span className="text-3xl font-st-headline font-black text-stitch-primary tracking-tighter">{item.prob}%</span>
+                                            <span className="text-2xl font-st-headline font-black text-stitch-primary tracking-tighter">{item.prob}%</span>
                                         </div>
-                                        <div className="h-6 bg-stitch-surface-container-high/40 rounded-full overflow-hidden flex p-1 border border-stitch-outline-variant/10 shadow-inner group-hover:scale-y-110 transition-transform origin-left duration-500">
+                                        <div className="h-5 bg-stitch-surface-container-high/40 rounded-full overflow-hidden p-0.5 border border-stitch-outline-variant/10 shadow-inner">
                                             <motion.div
                                                 initial={{ width: 0 }}
                                                 animate={{ width: `${item.score}%` }}
-                                                transition={{ duration: 1, delay: 0.5 + (idx * 0.2) }}
-                                                className="h-full bg-stitch-primary rounded-full relative overflow-hidden"
+                                                transition={{ duration: 1, delay: 0.3 + (idx * 0.15) }}
+                                                className={`h-full rounded-full relative overflow-hidden ${idx === 0 ? 'bg-gradient-to-r from-stitch-primary to-stitch-secondary' : 'bg-stitch-primary'}`}
                                             >
                                                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
                                             </motion.div>
-                                            {item.trend === 'north' && (
-                                                <div className="h-full bg-stitch-secondary rounded-r-full ml-1" style={{ width: '6%' }}></div>
-                                            )}
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         </div>
 
-                        {/* Detailed Metrics Table */}
+                        {/* Metrics Table */}
                         <div className="lg:col-span-2 bg-white rounded-[3rem] border border-stitch-outline-variant/10 shadow-2xl shadow-stitch-primary/5 p-12 flex flex-col">
                             <div className="mb-12">
                                 <h3 className="font-st-headline font-black text-3xl text-stitch-primary">상세 지표 비교 데이터</h3>
@@ -295,14 +280,14 @@ tems-end mb-4">
                                     </thead>
                                     <tbody className="divide-y divide-stitch-outline-variant/10">
                                         {[
-                                            { name: '샤로수길', pop: 9.2, dem: 8.8, trend: '↑ 18%', color: 'text-stitch-secondary' },
+                                            { name: '샤로수길', pop: 9.2, dem: 8.8, trend: '↑ 18%', color: 'text-emerald-500' },
                                             { name: '성수동', pop: 8.5, dem: 9.1, trend: '→ 2%', color: 'text-stitch-primary' },
-                                            { name: '망원동', pop: 7.9, dem: 7.4, trend: '↓ 4%', color: 'text-stitch-error' },
+                                            { name: '망원동', pop: 7.9, dem: 7.4, trend: '↓ 4%', color: 'text-red-500' },
                                         ].map((row, idx) => (
                                             <tr
                                                 key={idx}
                                                 onClick={onShowReport}
-                                                className="hover:bg-stitch-primary/5 transition-colors cursor-pointer group"
+                                                className="hover:bg-stitch-primary/5 transition-colors cursor-pointer"
                                             >
                                                 <td className="py-6 px-8 font-black text-stitch-primary">{row.name}</td>
                                                 <td className="py-6 px-4 text-center font-bold text-stitch-on-surface-variant/60">{row.pop}</td>
@@ -314,7 +299,7 @@ tems-end mb-4">
                                 </table>
                             </div>
                             <div className="mt-auto">
-                                <button className="w-full bg-stitch-primary text-white py-6 rounded-[1.5rem] font-st-headline font-black text-sm tracking-[0.2em] uppercase hover:bg-stitch-primary-container transition-all shadow-2xl shadow-stitch-primary/20 active:scale-[0.98] flex items-center justify-center gap-4 group">
+                                <button className="w-full bg-stitch-primary text-white py-6 rounded-[1.5rem] font-st-headline font-black text-sm tracking-[0.2em] uppercase hover:opacity-90 transition-all shadow-2xl shadow-stitch-primary/20 active:scale-[0.98] flex items-center justify-center gap-4 group">
                                     <span className="material-symbols-outlined text-xl transition-transform group-hover:translate-y-1">download</span>
                                     전체 리포트 다운로드 (PDF)
                                 </button>
