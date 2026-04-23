@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import seoulMap from '../../assets/seoul_map.png';
 import { TopNavBar } from '../components/TopNavBar';
@@ -218,7 +218,7 @@ export const DistrictAnalysisPage: React.FC<DistrictAnalysisPageProps> = ({ onBa
                                     <span className="material-symbols-outlined text-lg group-hover:rotate-12 transition-transform">analytics</span>
                                 </button>
                                 <button
-                                    onClick={() => setDistricts(prev => prev.map(d => ({ ...d, selected: false })))}
+                                    onClick={() => dispatch(updateFormData({ areas: [] }))}
                                     className="w-full text-[10px] uppercase font-black text-stitch-on-surface-variant/40 hover:text-stitch-primary transition-colors tracking-[0.2em]"
                                 >
                                     전체 선택 해제

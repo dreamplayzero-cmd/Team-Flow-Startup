@@ -14,7 +14,9 @@ import json
 import os
 from data.db_manager import DatabaseManager
 from core.utils.llm_client import LLMClient
-from config.settings import AREA_MAP
+from core.engine.consultant import SentimentConsultant
+from config.settings import AREA_MAP, BASE_DIR
+from core.utils.gemini_service import gemini_service
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +33,7 @@ def _build_area_attribute_map():
     night_penalty = set()
 
     # 파일 경로 설정 (절대 경로 대응)
-    config_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'config', 'area_attributes.json')
+    config_path = os.path.join(BASE_DIR, 'config', 'area_attributes.json')
     
     try:
         with open(config_path, 'r', encoding='utf-8') as f:
@@ -139,19 +141,14 @@ class ScoringEngine:
         # ── 5. 임대료 정보 및 비용 점수 (추가) ──
         rent_10k, rent_confidence = self._get_rent_info(area_code)
 
-        # ── 동적 가중치 (운영 형태 기반) ──
-        w_pop, w_dem, w_tre, w_com = 0.25, 0.25, 0.25, 0.25
-        if op_type == "배달 중심":
-            w_pop, w_dem, w_tre, w_com = 0.10, 0.35, 0.20, 0.35
-        elif op_type == "테이크아웃 중점":
-            w_pop, w_dem, w_tre, w_com = 0.40, 0.15, 0.30, 0.15
+        # ── [GIS 1st Gen] 동적 가중치 (6:4 비율 반영) ──
+        # Public Sales Data (Pop + Competition) : 0.6
+        # SNS Crawling Data (Trend + Demand) : 0.4
+        public_data_score = (pop_score * 0.6 + competition_score * 0.4)
+        sns_data_score = (trend_score * 0.7 + demand_score * 0.3)
+        
+        final_score = (public_data_score * 0.6) + (sns_data_score * 0.4)
 
-        final_score = (
-            (pop_score * w_pop) +
-            (demand_score * w_dem) +
-            (trend_score * w_tre) +
-            (competition_score * w_com)
-        )
 
         bonus_logs = []
         penalty_logs = []
@@ -449,6 +446,53 @@ class ScoringEngine:
             # 데이터 없으면 기본 200만원 추정치
             return 200, "LOW"
 
+    def _get_visual_dna(self, area_name, industry, trend_score):
+        """상권과 업종, 트렌드 점수에 맞는 최적의 인테리어 DNA 매핑"""
+        prefix = "SS" if "성수" in area_name else "HN"
+        
+        # 톤 결정
+        if trend_score >= 75:
+            tone = "ModernChic"
+            tone_kr = "모던 시크"
+        elif trend_score >= 55:
+            tone = "IndustrialVintage"
+            tone_kr = "인더스트리얼 빈티지"
+        elif trend_score >= 35:
+            tone = "MinimalBasic"
+            tone_kr = "미니멀 베이직"
+        else:
+            tone = "WarmWood"
+            tone_kr = "웜 우드 & 내추럴"
+
+        # 업종 매핑 (기본값 Cafe)
+        ind_key = "Cafe"
+        if any(w in industry for w in ["식당", "다이닝", "요리"]):
+            ind_key = "Dining"
+        elif any(w in industry for w in ["편집", "쇼룸", "매장"]):
+            ind_key = "EditShop"
+
+        # 파일명 조합 예시: SS_ID_01_Seongsu_Cafe_IndustrialVintage.jpg
+        # 실제 파일들이 폴더에 있는지 확인필요하나, SS_ID_02_Seongsu_Cafe_IndustrialVintage.jpg 등이 있음
+        # 안전하게 폴더 내 파일 패턴을 고려한 매핑
+        
+        mapping = {
+            ("SS", "ModernChic", "Cafe"): "SS_MN_01_Seongsu_Cafe_MinimalBasic.jpg",
+            ("SS", "ModernChic", "EditShop"): "SS_MC_01_Seongsu_EditShop_ModernChic.jpg",
+            ("SS", "IndustrialVintage", "Cafe"): "SS_ID_02_Seongsu_Cafe_IndustrialVintage.jpg",
+            ("SS", "WarmWood", "Cafe"): "SS_WW_01_Seongsu_Cafe_WarmWood.jpg",
+            ("HN", "ModernChic", "Cafe"): "HN_MN_02_Hannam_Cafe_MinimalBasic.jpg",
+            ("HN", "IndustrialVintage", "Cafe"): "HN_ID_02_Hannam_Cafe_IndustrialVintage.jpg",
+            ("HN", "WarmWood", "Cafe"): "HN_WW_01_Hannam_Cafe_WarmWood.jpg",
+        }
+        
+        filename = mapping.get((prefix, tone, ind_key), f"{prefix}_ID_01_{'Seongsu' if prefix=='SS' else 'Hannam'}_{ind_key}_{tone}.jpg")
+        
+        return {
+            "tone": tone_kr,
+            "image_path": f"assets/visual_dna/{filename}", # Removed leading slash
+            "description": f"{area_name}의 {industry} 고객층이 가장 선호하는 {tone_kr} 스타일입니다."
+        }
+
     def calculate_bep(self, scores, founder_data):
         """
         수익 모델(BEP: 손익분기점) 시뮬레이션
@@ -514,16 +558,19 @@ class ScoringEngine:
 
         return {
             "area_name": area_name,
-            "probability": scores['final_score'],
-            "final_score": scores['final_score'],
-            "pop_score": scores['pop_score'],
-            "demand_score": scores['demand_score'],
-            "trend_score": scores['trend_score'],
-            "competition_score": scores['competition_score'],
+            "success_prob": float(scores['final_score']) / 100.0,
+            "final_score": float(scores['final_score']),
+            "pop_score": float(scores['pop_score']),
+            "demand_score": float(scores['demand_score']),
+            "trend_score": float(scores['trend_score']),
+            "competition_score": float(scores['competition_score']),
             "comment": report_text,
-            "pros": pros,
-            "cons": cons,
+            "positives": pros,   # Changed from pros to positives
+            "risks": cons,       # Changed from cons to risks
             "overall_confidence": scores.get('overall_confidence', 'UNKNOWN'),
             "bep_period": scores['bep_period'],
-            "rent_10k": scores.get('rent_10k', 0)
+            "rent_10k": scores.get('rent_10k', 0),
+            "future_prediction": SentimentConsultant.predict_future(area_name, scores),
+            "dna_result": self._get_visual_dna(area_name, founder_info.get('industry', '카페'), scores['trend_score']),
+            "ai_insight": gemini_service.generate_area_report(area_name, scores, founder_info)
         }

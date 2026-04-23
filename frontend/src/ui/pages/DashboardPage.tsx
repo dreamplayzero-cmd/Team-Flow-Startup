@@ -28,9 +28,32 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 }) => {
     return (
         <div className="min-h-screen bg-stitch-background text-stitch-on-surface pb-32 overflow-hidden relative selection:bg-stitch-primary/10 font-body">
-            {/* Ambient Background Effects */}
-            <div className="fixed inset-0 pointer-events-none z-0">
-                <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-stitch-surface-container-high/30 blur-[120px] rounded-full"></div>
+            {/* Ambient Background Effects & Argyle Pattern */}
+            <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+                {/* Base Argyle Pattern Layer */}
+                <div 
+                    className="absolute inset-0 opacity-[0.07]"
+                    style={{
+                        backgroundImage: `
+                            repeating-linear-gradient(45deg, #1D2333 0px, #1D2333 1px, transparent 1px, transparent 100px),
+                            repeating-linear-gradient(-45deg, #1D2333 0px, #1D2333 1px, transparent 1px, transparent 100px),
+                            linear-gradient(45deg, rgba(74, 222, 128, 0.05) 25%, transparent 25%, transparent 75%, rgba(74, 222, 128, 0.05) 75%, rgba(74, 222, 128, 0.05)),
+                            linear-gradient(-45deg, rgba(74, 222, 128, 0.05) 25%, transparent 25%, transparent 75%, rgba(74, 222, 128, 0.05) 75%, rgba(74, 222, 128, 0.05))
+                        `,
+                        backgroundSize: '100px 100px, 100px 100px, 200px 200px, 200px 200px',
+                        backgroundPosition: '0 0, 0 0, 0 0, 100px 0'
+                    }}
+                ></div>
+
+                {/* Subtle Moving Highlight */}
+                <motion.div 
+                    animate={{ 
+                        opacity: [0.1, 0.2, 0.1],
+                        scale: [1, 1.1, 1]
+                    }}
+                    transition={{ duration: 10, repeat: Infinity }}
+                    className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-stitch-surface-container-high/30 blur-[120px] rounded-full"
+                ></motion.div>
                 <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-stitch-surface-container-highest/20 blur-[100px] rounded-full"></div>
             </div>
 

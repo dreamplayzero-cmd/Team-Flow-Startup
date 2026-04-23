@@ -72,7 +72,7 @@ class ReportGenerator:
             ]))
             
         reasons.extend(scores.get('bonus_logs', []))
-        pros = "<br><br>".join(f"✅ {r}" for r in reasons) if reasons else "데이터 기준의 뚜렷한 강점을 도출하는 중입니다."
+        # No longer joining them here
 
         # 4. 단점 텍스트 모음 (동적 풀)
         con_reasons = []
@@ -96,6 +96,5 @@ class ReportGenerator:
             ]))
 
         con_reasons.extend(scores.get('penalty_logs', []))
-        cons = "<br><br>".join(f"🚨 {r}" for r in con_reasons) if con_reasons else "뚜렷한 초기 진입 장벽이나 상권 자체의 치명적 리스크는 발견되지 않음."
 
-        return report_text, pros, cons
+        return report_text, reasons, con_reasons

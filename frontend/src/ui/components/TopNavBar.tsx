@@ -15,7 +15,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({ onLogoClick, offsetSidebar
                         className="text-xl font-black text-stitch-primary font-st-headline tracking-tighter cursor-pointer"
                         onClick={onLogoClick}
                     >
-                        더 소버린 인사이트
+                        The Sovereign Insight
                     </div>
                     <nav className="hidden md:flex items-center gap-8 text-xs font-black text-stitch-on-surface-variant/40 uppercase tracking-widest">
                         <a className="hover:text-stitch-primary transition-colors text-stitch-primary border-b border-stitch-primary pb-1" href="#">시장 정보</a>

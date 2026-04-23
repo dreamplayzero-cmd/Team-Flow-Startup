@@ -16,7 +16,7 @@ function App() {
   const currentView = useAppSelector((state) => state.navigation.currentView)
 
   return (
-    <div className={`${!isLoggedIn ? 'bg-stitch-background' : 'bg-[#faf8ff]'} min-h-screen transition-colors duration-500`}>
+    <main className={`${!isLoggedIn ? 'bg-stitch-background' : 'bg-[#faf8ff]'} min-h-screen transition-colors duration-500`}>
       <AnimatePresence mode="wait">
         {!isLoggedIn ? (
           <motion.div
@@ -34,42 +34,63 @@ function App() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.3 }}
+            className="w-full h-full"
           >
-            {currentView === 'dashboard' ? (
-              <DashboardPage
-                onStartProfiling={() => dispatch(setView('persona'))}
-                onStartBusinessPlan={() => dispatch(setView('business_plan'))}
-                onStartDistrictAnalysis={() => dispatch(setView('district_analysis'))}
-                onStartLeaderboard={() => dispatch(setView('district_leaderboard'))}
-              />
-            ) : currentView === 'persona' ? (
-              <PersonaProfilingPage
-                onBack={() => dispatch(setView('dashboard'))}
-                onNext={() => dispatch(setView('business_plan'))}
-              />
-            ) : currentView === 'business_plan' ? (
-              <BusinessPlanPage
-                onBack={() => dispatch(setView('dashboard'))}
-                onNext={() => dispatch(setView('district_analysis'))}
-              />
-            ) : currentView === 'district_analysis' ? (
-              <DistrictAnalysisPage
-                onBack={() => dispatch(setView('dashboard'))}
-                onNext={() => dispatch(setView('district_leaderboard'))}
-              />
-            ) : currentView === 'district_leaderboard' ? (
-              <DistrictLeaderboardPage
-                onBack={() => dispatch(setView('dashboard'))}
-                onShowReport={() => dispatch(setView('district_report'))}
-              />
-            ) : (
-              <DistrictReportPage onBack={() => dispatch(setView('district_leaderboard'))} />
-            )}
+            {(() => {
+              switch (currentView) {
+                case 'dashboard':
+                  return (
+                    <DashboardPage
+                      onStartProfiling={() => dispatch(setView('persona'))}
+                      onStartBusinessPlan={() => dispatch(setView('business_plan'))}
+                      onStartDistrictAnalysis={() => dispatch(setView('district_analysis'))}
+                      onStartLeaderboard={() => dispatch(setView('district_leaderboard'))}
+                    />
+                  )
+                case 'persona':
+                  return (
+                    <PersonaProfilingPage
+                      onBack={() => dispatch(setView('dashboard'))}
+                      onNext={() => dispatch(setView('business_plan'))}
+                    />
+                  )
+                case 'business_plan':
+                  return (
+                    <BusinessPlanPage
+                      onBack={() => dispatch(setView('dashboard'))}
+                      onNext={() => dispatch(setView('district_analysis'))}
+                    />
+                  )
+                case 'district_analysis':
+                  return (
+                    <DistrictAnalysisPage
+                      onBack={() => dispatch(setView('dashboard'))}
+                      onNext={() => dispatch(setView('district_leaderboard'))}
+                    />
+                  )
+                case 'district_leaderboard':
+                  return (
+                    <DistrictLeaderboardPage
+                      onBack={() => dispatch(setView('dashboard'))}
+                      onShowReport={() => dispatch(setView('district_report'))}
+                    />
+                  )
+                case 'district_report':
+                  return <DistrictReportPage onBack={() => dispatch(setView('district_leaderboard'))} />
+                default:
+                  return <DashboardPage onStartProfiling={() => dispatch(setView('persona'))} />
+              }
+            })()}
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+
+      {/* Debug Overlay - Help track navigation state */}
+      <div className="fixed bottom-4 right-4 z-[9999] bg-black/80 text-white text-[10px] px-3 py-1 rounded-full font-mono pointer-events-none opacity-50">
+        SYS_LOG: VIEW={currentView} | AUTH={isLoggedIn ? 'TRUE' : 'FALSE'}
+      </div>
+    </main>
   )
 }
 

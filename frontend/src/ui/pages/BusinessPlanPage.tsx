@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { TopNavBar } from '../components/TopNavBar';
 
@@ -114,26 +114,28 @@ export const BusinessPlanPage: React.FC<BusinessPlanPageProps> = ({ onBack, onNe
                                     </h2>
                                     <span className="text-[10px] font-bold text-stitch-on-surface-variant bg-stitch-surface-container-high px-3 py-1 rounded-full uppercase tracking-widest">필수 선택</span>
                                 </div>
-                                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
                                     {[
                                         { id: '카페', label: '카페', icon: 'local_cafe' },
-                                        { id: '피자, 햄버거, 샌드위치 및 유사 음식점업', label: '디저트/패스트푸드', icon: 'cake' },
-                                        { id: '서양식 음식점업', label: '브런치/파스타', icon: 'restaurant' },
-                                        { id: '한식 음식점업', label: '한식/고기집', icon: 'outdoor_grill' },
-                                        { id: '일식 음식점업', label: '일식', icon: 'set_meal' },
-                                        { id: '중식 음식점업', label: '중식', icon: 'tapas' },
-                                        { id: '기타 주점업', label: '술집', icon: 'local_bar' },
-                                        { id: '제과점업', label: '베이커리', icon: 'bakery_dining' }
+                                        { id: '디저트', label: '디저트/패스트푸드', icon: 'cake' },
+                                        { id: '브런치', label: '브런치', icon: 'brunch_dining' },
+                                        { id: '파스타', label: '파스타', icon: 'restaurant' },
+                                        { id: '고기집', label: '한식/고기집', icon: 'outdoor_grill' },
+                                        { id: '술집', label: '술집', icon: 'local_bar' },
+                                        { id: '베이커리', label: '베이커리', icon: 'bakery_dining' },
+                                        { id: '패션 편집샵', label: '패션 편집샵', icon: 'shopping_bag' },
+                                        { id: '라이프스타일/소품샵', label: '소품샵', icon: 'storefront' },
+                                        { id: '셀프 사진관', label: '셀프 사진관', icon: 'photo_camera' }
                                     ].map((type) => (
                                         <button
                                             key={type.id}
                                             onClick={() => handleIndustryChange(type.id)}
-                                            className={`p-6 rounded-2xl transition-all flex flex-col items-center text-center group ${industry === type.id ? 'bg-stitch-surface-container-highest ring-2 ring-stitch-primary shadow-xl shadow-stitch-primary/10' : 'bg-stitch-surface-container-lowest hover:bg-stitch-surface-bright hover:shadow-lg border border-stitch-outline-variant/10'}`}
+                                            className={`p-5 rounded-3xl transition-all flex flex-col items-center text-center group relative overflow-hidden backdrop-blur-sm ${industry === type.id ? 'bg-stitch-primary text-white shadow-2xl shadow-stitch-primary/40 ring-4 ring-stitch-primary/20 scale-[1.02]' : 'bg-white border border-stitch-outline-variant/10 hover:border-stitch-primary/30 hover:shadow-xl'}`}
                                         >
-                                            <div className={`w-14 h-14 rounded-full flex items-center justify-center mb-4 transition-colors ${industry === type.id ? 'bg-stitch-primary' : 'bg-stitch-surface-container group-hover:bg-stitch-primary/10'}`}>
-                                                <span className={`material-symbols-outlined text-2xl ${industry === type.id ? 'text-white' : 'text-stitch-primary'}`}>{type.icon}</span>
+                                            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-3 transition-colors ${industry === type.id ? 'bg-white/20' : 'bg-stitch-primary/5 group-hover:bg-stitch-primary/10'}`}>
+                                                <span className={`material-symbols-outlined text-[24px] ${industry === type.id ? 'text-white' : 'text-stitch-primary'}`}>{type.icon}</span>
                                             </div>
-                                            <span className={`font-bold text-sm ${industry === type.id ? 'text-stitch-primary' : 'text-stitch-on-surface-variant'}`}>{type.label}</span>
+                                            <span className={`font-black text-[12px] leading-tight break-keep ${industry === type.id ? 'text-white' : 'text-stitch-on-surface'}`}>{type.label}</span>
                                         </button>
                                     ))}
                                 </div>

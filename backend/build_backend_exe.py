@@ -14,8 +14,9 @@ def build_backend_v2():
     # Using the updated specimen file
     subprocess.run([sys.executable, "-m", "PyInstaller", "mz_analyzer.spec", "--noconfirm"], check=True)
     
-    print("\nSUCCESS: Backend 2.0 EXE should be in the 'dist' folder.")
-    print("Output: dist/MZ_Analyzer_v2.exe (or equivalent folder)")
+    print("\nSUCCESS: Backend 2.0 (Onedir) Build Complete.")
+    print("Output: dist/MZ_Analyzer_v2/ (FOLDER)")
+    print("How to run: Open the folder and run 'MZ_Analyzer_v2.exe'")
 
 if __name__ == "__main__":
     # Change to backend directory if needed

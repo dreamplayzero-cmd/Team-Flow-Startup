@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import advisorImg from '../../assets/advisor.png';
 import { TopNavBar } from '../components/TopNavBar';
@@ -6,7 +6,7 @@ import { Background3DAvatar } from '../components/Background3DAvatar';
 
 import { useAppDispatch, useAppSelector } from '../../store';
 import { setView } from '../../store/slices/navigationSlice';
-import { updateFormData } from '../../store/slices/analysisSlice';
+import { updateFormData, analyzePersona } from '../../store/slices/analysisSlice';
 
 interface PersonaProfilingPageProps {
     onBack: () => void;
@@ -16,6 +16,7 @@ interface PersonaProfilingPageProps {
 export const PersonaProfilingPage: React.FC<PersonaProfilingPageProps> = ({ onBack, onNext }) => {
     const dispatch = useAppDispatch();
     const { age, gender, experience, capital } = useAppSelector(state => state.analysis.formData);
+    const selectedPersona = useAppSelector(state => state.analysis.selectedPersona);
 
     // Map gender/experience to labels used in UI if necessary, 
     // but better to keep them consistent.
@@ -36,11 +37,11 @@ export const PersonaProfilingPage: React.FC<PersonaProfilingPageProps> = ({ onBa
 
     return (
         <div className="bg-stitch-background text-stitch-on-surface min-h-screen flex selection:bg-stitch-primary/10 font-body relative overflow-hidden">
-            {/* 3D Interactive Avatar Background */}
-            <Background3DAvatar />
+            {/* 3D Interactive Avatar Background - Temporarily disabled for debugging */}
+            {/* <Background3DAvatar /> */}
 
             {/* Overlays to make text readable */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white/30 to-white/70 pointer-events-none z-[1]"></div>
+            <div className="absolute inset-0 bg-white shadow-inner pointer-events-none z-[1]"></div>
 
             {/* Sidebar Navigation */}
             <aside className="fixed top-0 left-0 h-full w-64 bg-white/80 backdrop-blur-xl border-r border-stitch-outline-variant/30 z-[60] hidden lg:flex flex-col">
@@ -242,11 +243,17 @@ export const PersonaProfilingPage: React.FC<PersonaProfilingPageProps> = ({ onBa
                             </div>
                         </motion.div>
 
-                        {/* Action Button */}
+                        {/* Action Button - Re-run AI Analysis */}
                         <div className="flex justify-center py-4">
-                            <button className="w-full md:w-auto min-w-[320px] py-4 px-10 bg-stitch-surface-container-high hover:bg-stitch-surface-container-highest text-stitch-primary border border-stitch-primary/10 rounded-2xl font-bold text-base tracking-tight transition-all flex items-center justify-center gap-3 group shadow-sm active:scale-95">
-                                <span className="material-symbols-outlined text-xl">person_search</span>
-                                개인 창업자 프로파일링 분석
+                            <button 
+                                onClick={() => selectedPersona && dispatch(analyzePersona({ name: selectedPersona.name, description: selectedPersona.description }))}
+                                disabled={!selectedPersona || selectedPersona.isLoading}
+                                className="w-full md:w-auto min-w-[320px] py-4 px-10 bg-stitch-surface-container-high hover:bg-stitch-surface-container-highest text-stitch-primary border border-stitch-primary/10 rounded-2xl font-bold text-base tracking-tight transition-all flex items-center justify-center gap-3 group shadow-sm active:scale-95 disabled:opacity-50"
+                            >
+                                <span className={`material-symbols-outlined text-xl ${selectedPersona?.isLoading ? 'animate-spin' : ''}`}>
+                                    {selectedPersona?.isLoading ? 'sync' : 'person_search'}
+                                </span>
+                                {selectedPersona?.isLoading ? 'AI가 페르소나 분석 중...' : '개인 창업자 AI 프로파일링 분석'}
                             </button>
                         </div>
 
@@ -262,10 +269,21 @@ export const PersonaProfilingPage: React.FC<PersonaProfilingPageProps> = ({ onBa
                                 <h2 className="text-xl font-extrabold font-st-headline text-stitch-primary uppercase tracking-tight">Insight AI 분석 결과</h2>
                             </div>
 
-                            <div className="bg-stitch-surface-container-lowest p-6 rounded-2xl border border-stitch-outline-variant/20 mb-8 shadow-sm">
-                                <p className="text-base font-medium text-stitch-primary leading-relaxed">
-                                    현재 ₩{capital.toLocaleString()}의 자본과 {age}세라는 동력, 그리고 {experience === 'work' ? '실무 경력' : '잠재력'}을 고려하면 **소규모로 시작하는 테크 기반 창업**이 가장 적합해요. 빠른 확장보다는 안정적인 수익 구조를 먼저 만드는 걸 추천드려요.
-                                </p>
+                            <div className="bg-stitch-surface-container-lowest p-6 rounded-2xl border border-stitch-outline-variant/20 mb-8 shadow-sm min-h-[120px] flex items-center">
+                                {selectedPersona?.insight ? (
+                                    <p className="text-base font-medium text-stitch-primary leading-relaxed whitespace-pre-wrap italic">
+                                        "{selectedPersona.insight}"
+                                    </p>
+                                ) : selectedPersona?.isLoading ? (
+                                    <div className="w-full flex flex-col items-center gap-2 py-4">
+                                        <div className="w-6 h-6 border-2 border-stitch-primary/20 border-t-stitch-primary rounded-full animate-spin"></div>
+                                        <p className="text-xs font-bold text-stitch-primary/40 uppercase tracking-widest">AI 심층 분석 생성 중...</p>
+                                    </div>
+                                ) : (
+                                    <p className="text-base font-medium text-stitch-on-surface-variant/40 leading-relaxed italic">
+                                        메인 화면에서 페르소나를 선택하거나 분석 버튼을 눌러 AI 맞춤형 창업 리포트를 확인하세요.
+                                    </p>
+                                )}
                             </div>
 
                             <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-6 border-t border-stitch-on-surface/5">

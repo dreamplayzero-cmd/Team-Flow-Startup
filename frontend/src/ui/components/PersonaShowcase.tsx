@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useAppDispatch } from '../../store';
 import { setView } from '../../store/slices/navigationSlice';
+import { updateFormData, setSelectedPersona, analyzePersona } from '../../store/slices/analysisSlice';
 
 import p1 from '../../assets/personas/persona1.jpg';
 import p2 from '../../assets/personas/persona2.jpg';
@@ -70,6 +71,40 @@ const personas = [
 export const PersonaShowcase: React.FC = () => {
     const dispatch = useAppDispatch();
 
+    const handlePersonaClick = (p: typeof personas[0]) => {
+        // Parse budget
+        let capital = 50000000;
+        if (p.budget.includes('억')) {
+            const num = parseFloat(p.budget.replace('억 원', '').trim());
+            capital = Math.floor(num * 100000000);
+        } else if (p.budget.includes('만')) {
+            const num = parseInt(p.budget.replace(',', '').replace('만 원', '').trim());
+            capital = num * 10000;
+        }
+
+        // Map industry to backend standard
+        let industry = '카페';
+        if (p.type.includes('편집숍')) industry = '패션 편집샵';
+        else if (p.type.includes('샐러드')) industry = '디저트';
+        else if (p.type.includes('미니멀리즘 카페')) industry = '카페';
+        else if (p.type.includes('사진관')) industry = '셀프 사진관';
+        else if (p.type.includes('다이닝')) industry = '파스타';
+
+        dispatch(updateFormData({
+            age: p.age,
+            capital: capital, 
+            industry,
+            areas: [p.location],
+            gender: '무관',
+            experience: p.id === 5 ? 3 : 0,
+            target: p.id === 3 ? '2030 MZ' : '상관없음',
+        }));
+
+        dispatch(setSelectedPersona({ name: p.name, description: p.desc }));
+        dispatch(analyzePersona({ name: p.name, description: p.desc }));
+        dispatch(setView('persona'));
+    };
+
     return (
         <div className="bg-white rounded-[2rem] p-10 shadow-sm border border-stitch-outline-variant/10">
             <div className="flex justify-between items-end gap-6 mb-10">
@@ -95,6 +130,7 @@ export const PersonaShowcase: React.FC = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: idx * 0.1 }}
                         className="group relative bg-[#1E2024] rounded-[1.5rem] overflow-hidden cursor-pointer"
+                        onClick={() => handlePersonaClick(p)}
                     >
                         {/* Image Background */}
                         <div className="absolute inset-0 z-0">
