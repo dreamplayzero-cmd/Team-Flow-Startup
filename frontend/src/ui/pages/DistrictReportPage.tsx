@@ -473,6 +473,30 @@ export const DistrictReportPage: React.FC<DistrictReportPageProps> = ({ onBack }
                                             </div>
                                         </div>
                                     </div>
+
+                                    {/* [NEW] Intuitive Clustering Guide (Legend Bottom) */}
+                                    <div className="mt-6 p-6 bg-stitch-secondary/5 rounded-2xl border border-stitch-secondary/20">
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <span className="material-symbols-outlined text-stitch-secondary text-sm">lightbulb</span>
+                                            <span className="text-[11px] font-black text-stitch-secondary uppercase tracking-widest">데이터 인사이트</span>
+                                        </div>
+                                        <p className="text-[11px] text-white/70 leading-relaxed font-bold mb-3">
+                                            💡 점의 의미: 지도 위의 점은 특정 업종이 모인 구역(클러스터)입니다. 
+                                        </p>
+                                        <div className="p-4 bg-black/30 rounded-xl space-y-2">
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-[10px] text-white/40 font-medium">현재 {areaName} 비중</span>
+                                                <span className="text-[10px] text-white font-black">복합 상권 (Top 5%)</span>
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-[10px] text-white/40 font-medium">음식점(주황) : 패션(민트)</span>
+                                                <span className="text-[10px] text-stitch-secondary font-black">6.4 : 3.6</span>
+                                            </div>
+                                            <p className="text-[9px] text-white/30 pt-1 leading-tight font-medium">
+                                                * {areaName}은 현재 가장 활발한 복합 상권으로, 업종 간 시너지가 발생하는 지점에 위치해 있습니다.
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="lg:col-span-8 aspect-video bg-black/40 rounded-[3rem] relative overflow-hidden border border-white/5">
                                     <img src={seoulMapImg} className="absolute inset-0 w-full h-full object-cover opacity-20" alt="Map" />

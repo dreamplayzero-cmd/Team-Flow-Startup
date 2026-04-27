@@ -116,16 +116,16 @@ export const BusinessPlanPage: React.FC<BusinessPlanPageProps> = ({ onBack, onNe
                                 </div>
                                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
                                     {[
-                                        { id: '카페', label: '카페', icon: 'local_cafe' },
-                                        { id: '디저트', label: '디저트/패스트푸드', icon: 'cake' },
-                                        { id: '브런치', label: '브런치', icon: 'brunch_dining' },
-                                        { id: '파스타', label: '파스타', icon: 'restaurant' },
-                                        { id: '고기집', label: '한식/고기집', icon: 'outdoor_grill' },
-                                        { id: '술집', label: '술집', icon: 'local_bar' },
-                                        { id: '베이커리', label: '베이커리', icon: 'bakery_dining' },
-                                        { id: '패션 편집샵', label: '패션 편집샵', icon: 'shopping_bag' },
-                                        { id: '라이프스타일/소품샵', label: '소품샵', icon: 'storefront' },
-                                        { id: '셀프 사진관', label: '셀프 사진관', icon: 'photo_camera' }
+                                        { id: '술집', label: '술집(Pub)', icon: 'local_bar' },
+                                        { id: '카페', label: '카페/디저트', icon: 'local_cafe' },
+                                        { id: '공유오피스', label: '공유오피스', icon: 'laptop_chromebook' },
+                                        { id: '무인매장', label: '무인매장', icon: 'smart_toy' },
+                                        { id: '브런치', label: '브런치&파스타', icon: 'restaurant' },
+                                        { id: '고기집', label: '한식&고기집', icon: 'outdoor_grill' },
+                                        { id: '패션 편집샵', label: '패션&편집샵', icon: 'shopping_bag' },
+                                        { id: '소품샵', label: '소품샵', icon: 'storefront' },
+                                        { id: '셀프 사진관', label: '셀프 사진관', icon: 'photo_camera' },
+                                        { id: '악세서리샵', label: '악세서리샵', icon: 'diamond' }
                                     ].map((type) => (
                                         <button
                                             key={type.id}
