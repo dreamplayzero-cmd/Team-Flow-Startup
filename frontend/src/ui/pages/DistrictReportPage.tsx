@@ -97,8 +97,8 @@ export const DistrictReportPage: React.FC<DistrictReportPageProps> = ({ onBack }
                 
                 {/* Data Source & Purpose Overlays */}
                 <div className="absolute bottom-6 right-8 text-[9px] font-black text-white/30 uppercase tracking-widest text-right">
-                    Source: Seoul Open Data Plaza<br/>
-                    GIS Analytics Engine v1.0
+                    Source: 서울시 공공데이터 광장<br/>
+                    위치 정보 분석 엔진 v1.0
                 </div>
                 <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center max-w-[60%]">
                     <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-1">Location: {areaName} 중심 상권</p>
@@ -241,7 +241,7 @@ export const DistrictReportPage: React.FC<DistrictReportPageProps> = ({ onBack }
                                         </div>
                                         <h1 className="text-4xl font-st-headline font-black text-white tracking-tight leading-none">{areaName} 상권 분석 결과 리포트</h1>
                                     </div>
-                                    <p className="text-white/60 font-black text-[10px] uppercase tracking-[0.4em] ml-16">GIS Future Prediction Model v.1.0 (GIS 1st Gen)</p>
+                                    <p className="text-white/60 font-black text-[10px] uppercase tracking-[0.4em] ml-16">미래 상권 시뮬레이션 모델 v.1.0 (Location Intelligence)</p>
                                 </div>
                             </div>
 
@@ -259,7 +259,7 @@ export const DistrictReportPage: React.FC<DistrictReportPageProps> = ({ onBack }
                                 </div>
                                 
                                 <div className="space-y-8">
-                                    <div className="text-[10px] font-black uppercase tracking-[0.3em] text-stitch-primary/40">Step 02. GIS Growth Path</div>
+                                    <div className="text-[10px] font-black uppercase tracking-[0.3em] text-stitch-primary/40">Step 02. 상권 성장 경로 분석</div>
                                     <div className="relative pl-10 border-l-2 border-slate-200/50 space-y-12">
                                         <div className="relative">
                                             <div className="absolute -left-[51px] top-0 w-5 h-5 bg-stitch-secondary rounded-full border-4 border-white shadow-sm"></div>
@@ -285,7 +285,7 @@ export const DistrictReportPage: React.FC<DistrictReportPageProps> = ({ onBack }
                                         <div className="text-[9px] font-black text-stitch-secondary uppercase tracking-[0.2em] mb-2">Step 03. Design DNA</div>
                                         <h4 className="text-white font-st-headline font-black text-xl">{report.dna_result?.tone}</h4>
                                     </div>
-                                    <div className="absolute bottom-4 right-4 text-[7px] font-black text-white/20 uppercase tracking-widest pointer-events-none">Source: GIS Design DNA Synthesis Logic</div>
+                                    <div className="absolute bottom-4 right-4 text-[7px] font-black text-white/20 uppercase tracking-widest pointer-events-none">Source: 디자인 DNA 합성 알고리즘</div>
                                 </div>
                             </div>
                         </motion.div>
@@ -312,7 +312,7 @@ export const DistrictReportPage: React.FC<DistrictReportPageProps> = ({ onBack }
                                 <div className="lg:col-span-4 space-y-6">
                                     <div className="bg-[#1A1A1A] rounded-[2.5rem] p-8 border border-white/10">
                                         <div className="space-y-4">
-                                            <div className="flex justify-between items-center text-[11px] font-bold text-white/40 border-b border-white/5 pb-2"><span>젠트리피케이션 리스크</span><span className="text-green-400">LOW</span></div>
+                                            <div className="flex justify-between items-center text-[11px] font-bold text-white/40 border-b border-white/5 pb-2"><span>임대료 급등 리스크</span><span className="text-green-400">낮음</span></div>
                                             <div className="flex justify-between items-center text-[11px] font-bold text-white/40 border-b border-white/5 pb-2"><span>임대료 가늠 지수</span><span className="text-white">{report.rent_10k}만</span></div>
                                             <div className="flex justify-between items-center text-[11px] font-bold text-white/40"><span>BEP 예상 소요시간</span><span className="text-stitch-secondary">{report.bep_period}</span></div>
                                         </div>
@@ -419,7 +419,7 @@ export const DistrictReportPage: React.FC<DistrictReportPageProps> = ({ onBack }
                                         alt="Prediction" 
                                         style={{ objectPosition: 'center 40%' }}
                                     />
-                                    <div className="absolute bottom-4 right-4 text-[7px] font-black text-white/20 uppercase tracking-widest pointer-events-none">Source: GIS Future Scenario Simulation Logic</div>
+                                    <div className="absolute bottom-4 right-4 text-[7px] font-black text-white/20 uppercase tracking-widest pointer-events-none">Source: 미래 시나리오 시뮬레이션 알고리즘</div>
                                 </div>
                                 <div className="space-y-6">
                                     <p className="text-2xl font-black text-stitch-primary font-st-headline leading-tight">{termDetails.comment}</p>
@@ -443,8 +443,8 @@ export const DistrictReportPage: React.FC<DistrictReportPageProps> = ({ onBack }
                         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="bg-[#0F1115] rounded-[3.5rem] border border-white/5 shadow-3xl p-12 relative overflow-hidden">
                             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12">
                                 <div className="lg:col-span-4">
-                                    <h3 className="text-2xl font-st-headline font-black text-white mb-6">AI 밀집도 분포도</h3>
-                                    <p className="text-sm text-white/50 leading-relaxed font-medium mb-10">서울 전역 4대 업종 클러스터의 시계열 전이 방향을 AI 모델이 시뮬레이션합니다. (정적 분석 모드)</p>
+                                    <h3 className="text-2xl font-st-headline font-black text-white mb-6">AI 업종 밀집도 (어디에 모여있나?)</h3>
+                                    <p className="text-sm text-white/50 leading-relaxed font-medium mb-10">서울 전역의 업종별 모임(클러스터)이 시간에 따라 어떻게 이동하는지 AI가 분석한 지도입니다.</p>
                                     <div className="space-y-4">
                                         { [
                                             { label: 'F&B (식음료/카페)', color: 'bg-[#FF7043]' },
@@ -460,15 +460,15 @@ export const DistrictReportPage: React.FC<DistrictReportPageProps> = ({ onBack }
                                     <div className="mt-12 p-7 bg-white/5 rounded-[2rem] border border-white/10 backdrop-blur-sm">
                                         <h4 className="text-[10px] font-black text-stitch-secondary uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
                                             <span className="w-1.5 h-1.5 rounded-full bg-stitch-secondary animate-pulse"></span>
-                                            GIS 분석 요약
+                                            지리 정보 분석 요약
                                         </h4>
                                         <div className="space-y-4">
                                             <p className="text-[11px] text-white/50 leading-relaxed font-medium">
-                                                현재 <span className="text-white font-bold">{areaName}</span> 상권은 F&B 클러스터가 고밀도로 형성된 <strong className="text-white">‘성숙기 진입’</strong> 단계로 식별됩니다.
+                                                현재 <span className="text-white font-bold">{areaName}</span> 상권은 음식점과 카페가 한곳에 집중적으로 모인 <strong className="text-white">‘상권 성숙기’</strong> 단계입니다.
                                             </p>
                                             <div className="pt-4 border-t border-white/10">
                                                 <p className="text-[11px] text-white/50 leading-relaxed font-medium">
-                                                    향후 3년 내 패션 및 리테일 업종의 유입이 <span className="text-stitch-secondary font-black">1.5배 증가</span>하며, 6년 뒤에는 배후 오피스 수요와 결합된 <strong className="text-stitch-secondary">‘복합 상업 지구’</strong>로의 전이가 가속화될 것으로 시뮬레이션 되었습니다.
+                                                    AI 예측 결과, 앞으로 3년 내에 패션/쇼핑 업종이 <span className="text-stitch-secondary font-black">1.5배 더 많이</span> 들어오게 되며, 6년 뒤에는 회사와 상점이 섞인 <strong className="text-stitch-secondary">‘대형 복합 상권’</strong>으로 변할 것으로 보입니다.
                                                 </p>
                                             </div>
                                         </div>
@@ -492,7 +492,7 @@ export const DistrictReportPage: React.FC<DistrictReportPageProps> = ({ onBack }
 
                                     <StaticClusteringMap />
                                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-stitch-secondary rounded-full animate-pulse shadow-2xl border-2 border-white"></div>
-                                    <div className="absolute bottom-4 right-4 text-[7px] font-black text-white/10 uppercase tracking-widest pointer-events-none z-50">Source: Seoul GIS Analytics / Cluster Logic Engine</div>
+                                    <div className="absolute bottom-4 right-4 text-[7px] font-black text-white/10 uppercase tracking-widest pointer-events-none z-50">Source: 서울 상권 분석 / 업종 군집 분석 엔진</div>
                                 </div>
                             </div>
                         </motion.div>
@@ -510,7 +510,7 @@ export const DistrictReportPage: React.FC<DistrictReportPageProps> = ({ onBack }
                         <div className="bg-white p-12 rounded-[3.5rem] border border-slate-200 shadow-xl">
                             <h4 className="text-2xl font-st-headline font-black text-stitch-primary mb-8 flex items-center gap-3"><span className="material-symbols-outlined text-red-500">warning</span>리스크 요인</h4>
                             <div className="space-y-6">
-                                <p className="text-sm font-medium text-slate-600 border-l-4 border-red-400 pl-6 py-1">상권 유명세에 따른 임대료 상승률(Gentrification)이 가팔라 단기 순익성 위협</p>
+                                <p className="text-sm font-medium text-slate-600 border-l-4 border-red-400 pl-6 py-1">상권 인기에 따른 임대료 급상승(젠트리피케이션)으로 인해 초기 수익 확보에 어려움이 있을 수 있음</p>
                                 <p className="text-sm font-medium text-slate-600 border-l-4 border-red-400 pl-6 py-1">유사 컨셉의 경쟁 업체 밀집도가 높아지며 '테마의 희소성' 유지가 과제</p>
                                 <p className="text-sm font-medium text-slate-600 border-l-4 border-red-400 pl-6 py-1">주말 특정 시간대 주차 및 보행 접근성 저하로 인한 고객 불만 가능성 존재</p>
                             </div>
