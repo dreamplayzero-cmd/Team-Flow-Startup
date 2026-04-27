@@ -443,7 +443,7 @@ export const DistrictReportPage: React.FC<DistrictReportPageProps> = ({ onBack }
                         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="bg-[#0F1115] rounded-[3.5rem] border border-white/5 shadow-3xl p-12 relative overflow-hidden">
                             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12">
                                 <div className="lg:col-span-4">
-                                    <h3 className="text-2xl font-st-headline font-black text-white mb-6">AI 업종 밀집도 (어디에 모여있나?)</h3>
+                                    <h3 className="text-2xl font-st-headline font-black text-white mb-6 whitespace-nowrap">AI 업종 밀집도 (어디에 모여있나?)</h3>
                                     <p className="text-sm text-white/50 leading-relaxed font-medium mb-10">서울 전역의 업종별 모임(클러스터)이 시간에 따라 어떻게 이동하는지 AI가 분석한 지도입니다.</p>
                                     <div className="space-y-4">
                                         { [
@@ -455,68 +455,73 @@ export const DistrictReportPage: React.FC<DistrictReportPageProps> = ({ onBack }
                                             <div key={idx} className="flex items-center gap-3"><div className={`w-3 h-3 rounded-full ${item.color}`}></div><span className="text-[11px] font-black text-white/60">{item.label}</span></div>
                                         )) }
                                     </div>
+                                </div>
+                                <div className="lg:col-span-8">
+                                    <div className="aspect-video bg-black/40 rounded-[3rem] relative overflow-hidden border border-white/5 mb-8">
+                                        <img src={seoulMapImg} className="absolute inset-0 w-full h-full object-cover opacity-20" alt="Map" />
+                                        
+                                        {/* Map-specific Year Tabs (Top-Right) */}
+                                        <div className="absolute top-6 right-6 z-50 flex bg-black/60 backdrop-blur-md p-1 rounded-xl border border-white/10 shadow-2xl">
+                                            {(['current', '1yr', '3yr', '6yr'] as const).map(term => (
+                                                <button 
+                                                    key={term} 
+                                                    onClick={() => setMapTerm(term)} 
+                                                    className={`px-4 py-1.5 rounded-lg text-[10px] transition-all font-black uppercase tracking-widest ${mapTerm === term ? 'bg-stitch-secondary text-stitch-primary shadow-lg shadow-stitch-secondary/20' : 'text-white/40 hover:text-white'}`}
+                                                >
+                                                    {termLabelMapping[term]}
+                                                </button>
+                                            ))}
+                                        </div>
 
-                                    {/* [NEW] Clustering Brief Report */}
-                                    <div className="mt-12 p-7 bg-white/5 rounded-[2rem] border border-white/10 backdrop-blur-sm">
-                                        <h4 className="text-[10px] font-black text-stitch-secondary uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-stitch-secondary animate-pulse"></span>
-                                            지리 정보 분석 요약
-                                        </h4>
-                                        <div className="space-y-4">
-                                            <p className="text-[11px] text-white/50 leading-relaxed font-medium">
-                                                현재 <span className="text-white font-bold">{areaName}</span> 상권은 음식점과 카페가 한곳에 집중적으로 모인 <strong className="text-white">‘상권 성숙기’</strong> 단계입니다.
-                                            </p>
-                                            <div className="pt-4 border-t border-white/10">
+                                        <StaticClusteringMap />
+                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-stitch-secondary rounded-full animate-pulse shadow-2xl border-2 border-white"></div>
+                                        <div className="absolute bottom-4 right-4 text-[7px] font-black text-white/10 uppercase tracking-widest pointer-events-none z-50">Source: 서울 상권 분석 / 업종 군집 분석 엔진</div>
+                                    </div>
+
+                                    {/* Bottom Grid for Summary and Insight */}
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        {/* [NEW] Clustering Brief Report (Left) */}
+                                        <div className="p-7 bg-white/5 rounded-[2.5rem] border border-white/10 backdrop-blur-sm flex flex-col justify-between">
+                                            <h4 className="text-[10px] font-black text-stitch-secondary uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-stitch-secondary animate-pulse"></span>
+                                                지리 정보 분석 요약
+                                            </h4>
+                                            <div className="space-y-4">
                                                 <p className="text-[11px] text-white/50 leading-relaxed font-medium">
-                                                    AI 예측 결과, 앞으로 3년 내에 패션/쇼핑 업종이 <span className="text-stitch-secondary font-black">1.5배 더 많이</span> 들어오게 되며, 6년 뒤에는 회사와 상점이 섞인 <strong className="text-stitch-secondary">‘대형 복합 상권’</strong>으로 변할 것으로 보입니다.
+                                                    현재 <span className="text-white font-bold">{areaName}</span> 상권은 음식점과 카페가 한곳에 집중적으로 모인 <strong className="text-white">‘상권 성숙기’</strong> 단계입니다.
+                                                </p>
+                                                <div className="pt-4 border-t border-white/10">
+                                                    <p className="text-[11px] text-white/50 leading-relaxed font-medium">
+                                                        AI 예측 결과, 앞으로 3년 내에 패션/쇼핑 업종이 <span className="text-stitch-secondary font-black">1.5배 더 많이</span> 들어오게 되며, 6년 뒤에는 회사와 상점이 섞인 <strong className="text-stitch-secondary">‘대형 복합 상권’</strong>으로 변할 것으로 보입니다.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* [NEW] Intuitive Clustering Guide (Right) */}
+                                        <div className="p-7 bg-stitch-secondary/5 rounded-[2.5rem] border border-stitch-secondary/20">
+                                            <div className="flex items-center gap-2 mb-4">
+                                                <span className="material-symbols-outlined text-stitch-secondary text-lg">lightbulb</span>
+                                                <span className="text-[11px] font-black text-stitch-secondary uppercase tracking-widest">데이터 인사이트</span>
+                                            </div>
+                                            <p className="text-[11px] text-white/70 leading-relaxed font-bold mb-4">
+                                                💡 점의 의미: 지도 위의 점은 특정 업종이 모인 구역(클러스터)입니다. 
+                                            </p>
+                                            <div className="p-5 bg-black/30 rounded-2xl space-y-3">
+                                                <div className="flex justify-between items-center">
+                                                    <span className="text-[10px] text-white/40 font-medium">현재 {areaName} 비중</span>
+                                                    <span className="text-[10px] text-white font-black">복합 상권 (Top 5%)</span>
+                                                </div>
+                                                <div className="flex justify-between items-center">
+                                                    <span className="text-[10px] text-white/40 font-medium">음식점(주황) : 패션(민트)</span>
+                                                    <span className="text-[10px] text-stitch-secondary font-black">6.4 : 3.6</span>
+                                                </div>
+                                                <p className="text-[9px] text-white/30 pt-2 leading-tight font-medium">
+                                                    * {areaName}은 현재 가장 활발한 복합 상권으로, 업종 간 시너지가 발생하는 지점에 위치해 있습니다.
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
-
-                                    {/* [NEW] Intuitive Clustering Guide (Legend Bottom) */}
-                                    <div className="mt-6 p-6 bg-stitch-secondary/5 rounded-2xl border border-stitch-secondary/20">
-                                        <div className="flex items-center gap-2 mb-3">
-                                            <span className="material-symbols-outlined text-stitch-secondary text-sm">lightbulb</span>
-                                            <span className="text-[11px] font-black text-stitch-secondary uppercase tracking-widest">데이터 인사이트</span>
-                                        </div>
-                                        <p className="text-[11px] text-white/70 leading-relaxed font-bold mb-3">
-                                            💡 점의 의미: 지도 위의 점은 특정 업종이 모인 구역(클러스터)입니다. 
-                                        </p>
-                                        <div className="p-4 bg-black/30 rounded-xl space-y-2">
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-[10px] text-white/40 font-medium">현재 {areaName} 비중</span>
-                                                <span className="text-[10px] text-white font-black">복합 상권 (Top 5%)</span>
-                                            </div>
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-[10px] text-white/40 font-medium">음식점(주황) : 패션(민트)</span>
-                                                <span className="text-[10px] text-stitch-secondary font-black">6.4 : 3.6</span>
-                                            </div>
-                                            <p className="text-[9px] text-white/30 pt-1 leading-tight font-medium">
-                                                * {areaName}은 현재 가장 활발한 복합 상권으로, 업종 간 시너지가 발생하는 지점에 위치해 있습니다.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="lg:col-span-8 aspect-video bg-black/40 rounded-[3rem] relative overflow-hidden border border-white/5">
-                                    <img src={seoulMapImg} className="absolute inset-0 w-full h-full object-cover opacity-20" alt="Map" />
-                                    
-                                    {/* Map-specific Year Tabs (Top-Right) */}
-                                    <div className="absolute top-6 right-6 z-50 flex bg-black/60 backdrop-blur-md p-1 rounded-xl border border-white/10 shadow-2xl">
-                                        {(['current', '1yr', '3yr', '6yr'] as const).map(term => (
-                                            <button 
-                                                key={term} 
-                                                onClick={() => setMapTerm(term)} 
-                                                className={`px-4 py-1.5 rounded-lg text-[10px] transition-all font-black uppercase tracking-widest ${mapTerm === term ? 'bg-stitch-secondary text-stitch-primary shadow-lg shadow-stitch-secondary/20' : 'text-white/40 hover:text-white'}`}
-                                            >
-                                                {termLabelMapping[term]}
-                                            </button>
-                                        ))}
-                                    </div>
-
-                                    <StaticClusteringMap />
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-stitch-secondary rounded-full animate-pulse shadow-2xl border-2 border-white"></div>
-                                    <div className="absolute bottom-4 right-4 text-[7px] font-black text-white/10 uppercase tracking-widest pointer-events-none z-50">Source: 서울 상권 분석 / 업종 군집 분석 엔진</div>
                                 </div>
                             </div>
                         </motion.div>
