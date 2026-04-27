@@ -190,7 +190,7 @@ class DashboardPage extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                           decoration: BoxDecoration(color: Colors.black26, borderRadius: BorderRadius.circular(12)),
-                          child: const Text('LOW', style: TextStyle(color: Color(0xFF10B981), fontWeight: FontWeight.black, fontSize: 12)),
+                          child: const Text('LOW', style: TextStyle(color: Color(0xFF10B981), fontWeight: FontWeight.w900, fontSize: 12)),
                         ),
                       ],
                     ),
@@ -201,7 +201,7 @@ class DashboardPage extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text('42%', style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.black)),
+                              const Text('42%', style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.w900)),
                               const Text('리스크 지수', style: TextStyle(color: Colors.white60, fontSize: 10, fontWeight: FontWeight.bold)),
                               const SizedBox(height: 8),
                               LinearProgressIndicator(
