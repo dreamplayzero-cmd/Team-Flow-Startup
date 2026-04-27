@@ -115,7 +115,7 @@ export const PersonaShowcase: React.FC = () => {
                     </p>
                 </div>
                 <button
-                    onClick={() => dispatch(setView('persona'))}
+                    onClick={() => handlePersonaClick(personas[0])}
                     className="flex items-center gap-2 bg-stitch-surface text-stitch-on-surface hover:bg-stitch-primary hover:text-white transition-all px-6 py-3 rounded-xl font-bold text-xs shadow-sm border border-stitch-outline-variant/10"
                 >
                     상세 프로파일링 보기 <span className="material-symbols-outlined text-sm">arrow_forward</span>

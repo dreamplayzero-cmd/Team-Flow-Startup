@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import advisorImg from '../../assets/advisor.png';
 import { TopNavBar } from '../components/TopNavBar';
-import { Background3DAvatar } from '../components/Background3DAvatar';
 
 import { useAppDispatch, useAppSelector } from '../../store';
 import { setView } from '../../store/slices/navigationSlice';
@@ -15,8 +14,16 @@ interface PersonaProfilingPageProps {
 
 export const PersonaProfilingPage: React.FC<PersonaProfilingPageProps> = ({ onBack, onNext }) => {
     const dispatch = useAppDispatch();
-    const { age, gender, experience, capital } = useAppSelector(state => state.analysis.formData);
+    const { age, gender, experience, capital, industry } = useAppSelector(state => state.analysis.formData);
     const selectedPersona = useAppSelector(state => state.analysis.selectedPersona);
+    const currentView = useAppSelector(state => state.navigation.currentView);
+
+    // Remove full-page loader that causes stuck screen if no persona is selected
+    /* 
+    if (currentView === 'persona' && !selectedPersona) {
+        ...
+    }
+    */
 
     // Map gender/experience to labels used in UI if necessary, 
     // but better to keep them consistent.
@@ -130,7 +137,7 @@ export const PersonaProfilingPage: React.FC<PersonaProfilingPageProps> = ({ onBa
                         >
                             <div className="flex justify-between items-center mb-6">
                                 <h2 className="text-lg font-bold font-st-headline text-stitch-primary">당신의 연령대</h2>
-                                <span className="text-3xl font-black text-stitch-primary/30 font-st-headline">{age}</span>
+                                <span className="text-3xl font-black text-stitch-primary/30 font-st-headline">{selectedPersona?.name || '맞춤형'} {age}</span>
                             </div>
                             <div className="relative py-4">
                                 <input
@@ -205,40 +212,88 @@ export const PersonaProfilingPage: React.FC<PersonaProfilingPageProps> = ({ onBa
                             </motion.div>
                         </div>
 
-                        {/* Capital Analysis */}
+                        {/* Capital Analysis with Industry Benchmarks */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.4 }}
-                            className="bg-stitch-primary p-10 rounded-2xl text-white relative overflow-hidden shadow-2xl shadow-stitch-primary/20"
+                            className="bg-white p-10 rounded-[2.5rem] text-stitch-primary relative overflow-hidden shadow-2xl border-2 border-slate-50"
                         >
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-stitch-primary-container to-stitch-primary opacity-40 blur-3xl -mr-16 -mt-16"></div>
                             <div className="relative z-10">
                                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
                                     <div>
-                                        <h2 className="text-xl font-bold font-st-headline mb-2 text-white">초기 창업 자본</h2>
-                                        <p className="text-white/60 text-xs max-w-xs">유동 자산과 초기 투자 유치 가능액 합산액.</p>
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <span className="material-symbols-outlined text-stitch-secondary">account_balance_wallet</span>
+                                            <h2 className="text-xl font-extrabold font-st-headline text-stitch-primary">초기 창업 자본 설정</h2>
+                                        </div>
+                                        <p className="text-stitch-on-surface-variant text-xs max-w-xs font-bold opacity-60">업종별 평균 창업 비용을 기준으로 예산을 설정하세요.</p>
                                     </div>
-                                    <div className="flex items-baseline gap-2">
-                                        <span className="text-3xl font-black tracking-tight font-st-headline">{formatCurrency(capital)}</span>
-                                        <span className="text-[11px] font-bold opacity-60 uppercase tracking-widest text-white/50">KRW</span>
+                                    <div className="flex items-baseline gap-2 bg-slate-50 px-6 py-3 rounded-2xl border border-slate-100">
+                                        <span className="text-3xl font-black tracking-tight font-st-headline text-stitch-primary">{formatCurrency(capital)}</span>
+                                        <span className="text-[11px] font-bold opacity-40 uppercase tracking-widest">KRW</span>
                                     </div>
                                 </div>
-                                <div className="relative py-4">
+
+                                {/* Industry Quick Selector for Benchmarks */}
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
+                                    {[
+                                        { id: 'F&B', label: 'F&B (식음료)', benchmark: 120000000, icon: 'restaurant' },
+                                        { id: 'Retail', label: '패션/리테일', benchmark: 80000000, icon: 'shopping_bag' },
+                                        { id: 'Culture', label: '문화/예술', benchmark: 60000000, icon: 'palette' },
+                                        { id: 'Tech', label: '서비스/테크', benchmark: 50000000, icon: 'devices' }
+                                    ].map(ind => (
+                                        <button 
+                                            key={ind.id}
+                                            onClick={() => dispatch(updateFormData({ industry: ind.label, capital: ind.benchmark }))}
+                                            className={`p-4 rounded-2xl border-2 transition-all flex flex-col items-center gap-2 ${industry === ind.label ? 'border-stitch-secondary bg-stitch-secondary/5 shadow-inner' : 'border-slate-100 bg-slate-50 hover:border-slate-200'}`}
+                                        >
+                                            <span className="material-symbols-outlined text-xl opacity-60">{ind.icon}</span>
+                                            <span className="text-[10px] font-black">{ind.label}</span>
+                                            <span className="text-[9px] font-bold text-stitch-secondary">약 {(ind.benchmark/100000000).toFixed(1)}억</span>
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <div className="relative py-8">
+                                    {/* Benchmark Indicator */}
+                                    <div className="absolute top-0 left-0 w-full flex justify-between px-2 mb-2">
+                                        <span className="text-[9px] font-black text-slate-300 uppercase">Seed</span>
+                                        <span className="text-[9px] font-black text-stitch-secondary uppercase">Industry Avg</span>
+                                        <span className="text-[9px] font-black text-slate-300 uppercase">Growth</span>
+                                    </div>
+                                    
                                     <input
-                                        className="w-full h-1.5 bg-white/20 rounded-full appearance-none cursor-pointer accent-stitch-secondary-container"
+                                        className="w-full h-2 bg-slate-100 rounded-full appearance-none cursor-pointer accent-stitch-secondary"
                                         max={1000000000}
                                         min={10000000}
-                                        step={1000000}
+                                        step={5000000}
                                         type="range"
                                         value={capital}
                                         onChange={(e) => dispatch(updateFormData({ capital: parseInt(e.target.value) }))}
                                     />
-                                    <div className="flex justify-between mt-4 text-[9px] font-black uppercase tracking-[0.2em] text-white/40">
-                                        <span>시드</span>
-                                        <span>스케일업</span>
-                                        <span>확장</span>
+                                    
+                                    <div className="flex justify-between mt-4">
+                                        <div className="text-center">
+                                            <div className="text-[10px] font-black text-slate-400">1,000만</div>
+                                        </div>
+                                        <div className="text-center">
+                                            <div className="text-[10px] font-black text-slate-400">5억</div>
+                                        </div>
+                                        <div className="text-center">
+                                            <div className="text-[10px] font-black text-slate-400">10억</div>
+                                        </div>
                                     </div>
+                                </div>
+
+                                <div className="mt-6 p-4 bg-stitch-secondary/5 rounded-2xl border border-stitch-secondary/10 flex items-center gap-4">
+                                    <div className="w-10 h-10 bg-stitch-secondary rounded-full flex items-center justify-center text-stitch-primary shadow-sm">
+                                        <span className="material-symbols-outlined text-lg">lightbulb</span>
+                                    </div>
+                                    <p className="text-xs font-bold text-stitch-primary/80 leading-relaxed">
+                                        {capital < 80000000 
+                                            ? "소자본 특화 전략: 임대료가 저렴한 골목 상권 내 '목적형 매장' 구성을 추천합니다."
+                                            : "스케일업 전략: 유동인구가 검증된 메인 스트리트 내 '플래그십 스토어' 분석을 활성화합니다."}
+                                    </p>
                                 </div>
                             </div>
                         </motion.div>
@@ -246,8 +301,11 @@ export const PersonaProfilingPage: React.FC<PersonaProfilingPageProps> = ({ onBa
                         {/* Action Button - Re-run AI Analysis */}
                         <div className="flex justify-center py-4">
                             <button 
-                                onClick={() => selectedPersona && dispatch(analyzePersona({ name: selectedPersona.name, description: selectedPersona.description }))}
-                                disabled={!selectedPersona || selectedPersona.isLoading}
+                                onClick={() => dispatch(analyzePersona({ 
+                                    name: selectedPersona?.name || '사용자 정의', 
+                                    description: selectedPersona?.description || `${industry} 창업을 준비하는 예비 창업자` 
+                                }))}
+                                disabled={selectedPersona?.isLoading}
                                 className="w-full md:w-auto min-w-[320px] py-4 px-10 bg-stitch-surface-container-high hover:bg-stitch-surface-container-highest text-stitch-primary border border-stitch-primary/10 rounded-2xl font-bold text-base tracking-tight transition-all flex items-center justify-center gap-3 group shadow-sm active:scale-95 disabled:opacity-50"
                             >
                                 <span className={`material-symbols-outlined text-xl ${selectedPersona?.isLoading ? 'animate-spin' : ''}`}>
