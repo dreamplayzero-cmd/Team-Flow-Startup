@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, type Variants } from 'framer-motion';
 import { TopNavBar } from '../components/TopNavBar';
 import { PersonaShowcase } from '../components/PersonaShowcase';
+import { AIExpertReview } from '../components/AIExpertReview';
 
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -167,6 +168,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
                     {/* Persona Showcase */}
                     <PersonaShowcase />
+
+                    {/* AI Expert Review & Pricing */}
+                    <AIExpertReview />
                 </div>
             </motion.main>
 

@@ -90,6 +90,45 @@ class GeminiService:
             logger.error(f"Gemini API 호출 실패: {e}")
             return f"{persona_name} 페르소나에 대한 심층 분석을 준비 중입니다. ({description})"
 
+    def generate_chat_response(self, message: str, history: list = None):
+        """사용자의 질문에 대해 창업 컨설턴트로서의 답변 생성"""
+        try:
+            if not self.enabled:
+                return "현재 컨설팅 엔진이 오프라인 상태입니다. 나중에 다시 시도해 주세요. (API 키 확인 필요)"
+
+            if self._is_limit_exceeded():
+                return "오늘의 무료 컨설팅 한도를 모두 사용했습니다. 전문가 1:1 상담을 예약해 보세요."
+
+            self._increment_call_count()
+
+            # 시스템 프롬프트 설정
+            system_prompt = f"""
+            당신은 'The Sovereign Insight Engine'의 수석 창업 컨설턴트 'Flow AI'입니다. 
+            사용자는 소상공인 또는 예비 창업자입니다. 
+            당신의 목표는 사용자에게 전문적이고 신뢰감 있는 비즈니스 인사이트를 제공하는 것입니다.
+            
+            [가이드라인]
+            1. 톤앤매너: 정중하면서도 압도적인 전문성을 보여주는 'Sovereign' 톤을 유지하세요.
+            2. 전문성: 상권 분석, GIS 데이터, MZ세대 트렌드, 마케팅 전략 등에 대해 구체적으로 답변하세요.
+            3. 비즈니스 모델: 웹 버전(29,000원)의 가치를 은근히 강조하며, 전문가 리포트의 중요성을 언급하세요.
+            4. 짧고 명확하게: 사용자가 읽기 편하도록 핵심 위주로 2~4문장으로 답변하세요.
+            5. 한국어로 답변하세요.
+            
+            사용자 질문: {message}
+            """
+
+            # 대화 기록 구성 대신 단순 생성으로 변경하여 안정성 확보
+            response = self.model.generate_content(system_prompt)
+            
+            if response and response.text:
+                return response.text.strip()
+            else:
+                return "AI로부터 유효한 응답을 받지 못했습니다. 잠시 후 다시 시도해 주세요."
+                
+        except Exception as e:
+            logger.error(f"Gemini Chat 상세 오류: {str(e)}")
+            return f"컨설팅 엔진 내부 오류가 발생했습니다: {str(e)}"
+
     def generate_area_report(self, area_name: str, scores: dict, founder_info: dict):
         """상권 데이터와 창업자 조건을 분석하여 제미나이 고도화 리포트 생성 (젠트리피케이션 포함)"""
         if not self.enabled:

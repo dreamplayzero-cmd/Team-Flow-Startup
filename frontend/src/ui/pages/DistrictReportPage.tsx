@@ -23,29 +23,7 @@ export const DistrictReportPage: React.FC<DistrictReportPageProps> = ({ onBack }
     const report = results && results.length > 0 ? results[0] : null;
     const areaName = report?.area_name || "상권 미선택";
 
-    // Team-updated Image Mapping Logic (Visual DNA) - Refined for exact filename match
-    const getLocalDnaImage = () => {
-        if (!report) return null;
-        const areaKey = areaName.includes('성수') ? 'SS' : (areaName.includes('한남') ? 'HN' : 'SS');
-        const toneKey = report.dna_result?.tone === 'Industrial Vintage' ? 'ID' : 
-                        (report.dna_result?.tone === 'Modern Chic' ? 'MC' : 
-                        (report.dna_result?.tone === 'Minimal Basic' ? 'MN' : 'WW'));
-        
-        const mapping: Record<string, string> = {
-            'SS_ID': 'SS_ID_01_Seongsu_Dining_IndustrialVintage.jpg',
-            'SS_MC': 'SS_MC_01_Seongsu_EditShop_ModernChic.jpg',
-            'SS_MN': 'SS_MN_01_Seongsu_Cafe_MinimalBasic.jpg',
-            'SS_WW': 'SS_WW_01_Seongsu_Cafe_WarmWood.jpg',
-            'HN_ID': 'HN_ID_01_Hannam_Dining_IndustrialVintage.jpg',
-            'HN_MC': 'HN_MC_01_Hannam_Dining_ModernChic.jpg',
-            'HN_MN': 'HN_MN_01_Hannam_EditShop_MinimalBasic.jpg',
-            'HN_WW': 'HN_WW_01_Hannam_Cafe_WarmWood.jpg'
-        };
-
-        const key = `${areaKey}_${toneKey}`;
-        const fileName = mapping[key] || mapping['SS_MN'];
-        return `/src/assets/visual_dna/${fileName}`;
-    };
+    // Unused visual DNA logic removed to fix build error
 
     const backendUrl = "http://localhost:8000";
     

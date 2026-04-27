@@ -196,6 +196,14 @@ export const DistrictLeaderboardPage: React.FC<DistrictLeaderboardPageProps> = (
                         ))}
                     </section>
 
+                    {/* Brief explanation for Rank Cards */}
+                    <div className="mb-20 px-10 py-8 bg-stitch-primary/5 rounded-[2rem] border border-stitch-primary/10">
+                        <p className="text-stitch-primary/80 font-bold text-center leading-relaxed">
+                            선정된 상권들은 창업자의 페르소나와 지역별 소비 트렌드가 가장 이상적으로 결합된 장소들입니다.<br/>
+                            각 상권의 데이터 기반 상세 성공 시나리오를 다음 단계인 <span className="text-stitch-primary underline decoration-2 underline-offset-4">최종 리포트</span>에서 확인하실 수 있습니다.
+                        </p>
+                    </div>
+
                     {/* Detailed Analysis Table */}
                     <section className="bg-white rounded-[3rem] border border-stitch-outline-variant/10 shadow-2xl p-12 overflow-hidden">
                         <div className="mb-12">
@@ -230,6 +238,14 @@ export const DistrictLeaderboardPage: React.FC<DistrictLeaderboardPageProps> = (
                                     데이터 분석 전입니다. 대시보드에서 분석을 제안해 보세요.
                                 </div>
                             )}
+
+                            {/* Brief explanation for Matrix Analysis */}
+                            <div className="mt-16 pt-8 border-t border-stitch-outline-variant/10">
+                                <p className="text-stitch-on-surface-variant/60 font-medium text-sm text-center">
+                                    위 지표는 단순한 확률이 아닌, 인구 밀도, 업종별 집적 이익, 그리고 SNS 화제성을 종합한 결과입니다.<br/>
+                                    <strong className="text-stitch-primary font-black">주권자(Sovereign)를 위한 심층 리포트가 준비되었습니다.</strong>
+                                </p>
+                            </div>
                         </div>
                     </section>
                 </main>

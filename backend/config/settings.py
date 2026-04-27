@@ -72,6 +72,6 @@ AREA_MAP = {
 
 # Gemini API Configuration
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyCAEXXT8cgh7WVi0C0-xr7eOpFifwoXOvk")
-GEMINI_MODEL_NAME = "gemini-pro"
+GEMINI_MODEL_NAME = "gemini-1.5-flash"
 GEMINI_MAX_CALLS = 100
 GEMINI_LIMIT_ENABLED = True

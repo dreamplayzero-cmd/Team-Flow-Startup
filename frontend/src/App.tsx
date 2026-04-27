@@ -9,6 +9,7 @@ import { DistrictReportPage } from './ui/pages/DistrictReportPage'
 import { useAppDispatch, useAppSelector } from './store'
 import { setView } from './store/slices/navigationSlice'
 import { login } from './store/slices/authSlice'
+import { PremiumChatBot } from './ui/components/PremiumChatBot'
 
 function App() {
   const dispatch = useAppDispatch()
@@ -16,7 +17,7 @@ function App() {
   const currentView = useAppSelector((state) => state.navigation.currentView)
 
   return (
-    <main className={`${!isLoggedIn ? 'bg-stitch-background' : 'bg-[#faf8ff]'} min-h-screen transition-colors duration-500`}>
+    <main className="bg-[#faf8ff] min-h-screen transition-colors duration-500">
       <AnimatePresence mode="wait">
         {!isLoggedIn ? (
           <motion.div
@@ -90,6 +91,8 @@ function App() {
       <div className="fixed bottom-4 right-4 z-[9999] bg-black/80 text-white text-[10px] px-3 py-1 rounded-full font-mono pointer-events-none opacity-50">
         SYS_LOG: VIEW={currentView} | AUTH={isLoggedIn ? 'TRUE' : 'FALSE'}
       </div>
+      {/* Premium AI ChatBot */}
+      {isLoggedIn && <PremiumChatBot />}
     </main>
   )
 }

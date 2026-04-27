@@ -60,6 +60,20 @@ class PersonaRequest(BaseModel):
     name: str
     description: str
 
+class ChatRequest(BaseModel):
+    message: str
+
+@app.post("/api/chat")
+async def chat(request: ChatRequest):
+    try:
+        response = gemini_service.generate_chat_response(request.message)
+        return {
+            "success": True,
+            "response": response
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.get("/api/categories")
 async def get_categories():
     return CategoryMaster.get_all_names()

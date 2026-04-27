@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import advisorImg from '../../assets/advisor.png';
+import advisorImg from '../../assets/marcus_will.png';
 import { TopNavBar } from '../components/TopNavBar';
 
 import { useAppDispatch, useAppSelector } from '../../store';
@@ -16,7 +16,6 @@ export const PersonaProfilingPage: React.FC<PersonaProfilingPageProps> = ({ onBa
     const dispatch = useAppDispatch();
     const { age, gender, experience, capital, industry } = useAppSelector(state => state.analysis.formData);
     const selectedPersona = useAppSelector(state => state.analysis.selectedPersona);
-    const currentView = useAppSelector(state => state.navigation.currentView);
 
     // Remove full-page loader that causes stuck screen if no persona is selected
     /* 
@@ -352,7 +351,7 @@ export const PersonaProfilingPage: React.FC<PersonaProfilingPageProps> = ({ onBa
                                         src={advisorImg}
                                     />
                                     <div>
-                                        <p className="text-sm font-bold text-stitch-primary leading-none mb-1">마커스 쏜</p>
+                                        <p className="text-sm font-bold text-stitch-primary leading-none mb-1">마커스 윌</p>
                                         <p className="text-[10px] text-stitch-on-surface-variant font-medium uppercase tracking-widest opacity-60">수석 전략 리드</p>
                                     </div>
                                 </div>
