@@ -283,20 +283,40 @@ export const DistrictAnalysisPage: React.FC<DistrictAnalysisPageProps> = ({ onBa
                         </button>
                     </div>
 
-                    {/* Legend Overlay */}
-                    <div className="absolute bottom-10 right-[370px] bg-stitch-primary/95 backdrop-blur-2xl px-6 py-3 rounded-full text-white text-[10px] font-black flex items-center gap-6 shadow-2xl z-10 border border-white/10 uppercase tracking-widest">
-                        <div className="flex items-center gap-2.5">
-                            <div className="w-2.5 h-2.5 rounded-full bg-stitch-secondary shadow-[0_0_8px_rgba(78,222,163,0.6)]"></div>
-                            <span>고성장 지역</span>
+                    {/* Legend & Map Info Overlay */}
+                    <div className="absolute bottom-10 right-[370px] flex flex-col items-end gap-4 z-10">
+                        {/* Map Explanation */}
+                        <div className="bg-white/10 backdrop-blur-md px-6 py-3 rounded-2xl border border-white/10 max-w-xs">
+                            <p className="text-[10px] text-white/70 font-medium leading-relaxed">
+                                <span className="text-stitch-secondary font-black">AI GIS 인텔리전스:</span> 서울 전역의 실시간 유동인구 및 SNS 트렌드를 분석하여 고성장 가능성이 높은 상권을 추출한 지도입니다.
+                            </p>
                         </div>
-                        <div className="flex items-center gap-2.5">
-                            <div className="w-2.5 h-2.5 rounded-full border border-white/40"></div>
-                            <span>일반 상권</span>
-                        </div>
-                        <div className="w-[1px] h-4 bg-white/20"></div>
-                        <div className="flex items-center gap-2 cursor-pointer hover:text-stitch-secondary transition-colors">
-                            <span className="material-symbols-outlined text-[16px]">layers</span>
-                            <span>2D 뷰</span>
+
+                        <div className="flex items-center gap-4">
+                            {/* Map Scale */}
+                            <div className="flex flex-col items-center gap-1">
+                                <div className="flex items-center gap-1">
+                                    <div className="w-10 h-[2px] bg-white"></div>
+                                    <span className="text-[8px] font-black text-white uppercase tracking-tighter">1KM</span>
+                                </div>
+                            </div>
+
+                            {/* Legend */}
+                            <div className="bg-stitch-primary/95 backdrop-blur-2xl px-6 py-3 rounded-full text-white text-[10px] font-black flex items-center gap-6 shadow-2xl border border-white/10 uppercase tracking-widest">
+                                <div className="flex items-center gap-2.5">
+                                    <div className="w-2.5 h-2.5 rounded-full bg-stitch-secondary shadow-[0_0_8px_rgba(78,222,163,0.6)]"></div>
+                                    <span>고성장 지역</span>
+                                </div>
+                                <div className="flex items-center gap-2.5">
+                                    <div className="w-2.5 h-2.5 rounded-full border border-white/40"></div>
+                                    <span>일반 상권</span>
+                                </div>
+                                <div className="w-[1px] h-4 bg-white/20"></div>
+                                <div className="flex items-center gap-2 cursor-pointer hover:text-stitch-secondary transition-colors">
+                                    <span className="material-symbols-outlined text-[16px]">layers</span>
+                                    <span>2D 뷰</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </main>
