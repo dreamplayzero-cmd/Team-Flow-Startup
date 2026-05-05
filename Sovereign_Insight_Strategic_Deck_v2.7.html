@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Sovereign Insight: Strategic Presentation Deck v2.7</title>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;700;900&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --onyx: #000000;
+            --marble: #1A1A1A;
+            --gold: #DEFF9A; /* Neon Lime/Gold */
+            --white: #F5F5F5;
+            --gray: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--onyx);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Urbanist', sans-serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+        }
+
+        section {
+            width: 100vw;
+            height: 100vh;
+            scroll-snap-align: start;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+            overflow: hidden;
+        }
+
+        /* Slide 1: Cover */
+        #slide-cover {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('strategic_presentation_cover_1777346028339.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-text {
+            text-align: center;
+            z-index: 10;
+        }
+
+        .hero-text h1 {
+            font-size: 5rem;
+            line-height: 0.9;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .hero-text h1 span {
+            color: var(--gold);
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: rgba(245, 245, 245, 0.6);
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        /* Slide 2: System Architecture */
+        #slide-architecture {
+            background-color: var(--marble);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            padding: 3rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--gold);
+            transform: translateY(-10px);
+        }
+
+        .card h3 {
+            color: var(--gold);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card ul {
+            list-style: none;
+        }
+
+        .card li {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: rgba(245, 245, 245, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card li::before {
+            content: "→";
+            color: var(--gold);
+        }
+
+        /* Slide 3: Scoring Engine */
+        #slide-scoring {
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('score_summation_logic_viz_1777346419731.png');
+            background-size: cover;
+        }
+
+        .score-logic {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .pillar {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid var(--gold);
+            padding: 2rem;
+            width: 250px;
+        }
+
+        .pillar h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pillar p {
+            font-size: 0.9rem;
+            color: rgba(245, 245, 245, 0.5);
+        }
+
+        /* Slide 4: Precision Report */
+        #slide-report {
+            background-color: var(--onyx);
+        }
+
+        .mockup-container {
+            width: 100%;
+            max-width: 1000px;
+            background: var(--marble);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+        }
+
+        .mockup-header {
+            background: #222;
+            padding: 0.5rem 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .mockup-content {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        .stats-sidebar {
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding-right: 2rem;
+        }
+
+        .stat-item {
+            margin-bottom: 2rem;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--gold);
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Slide 5: Visual DNA */
+        #slide-dna {
+            background-color: var(--marble);
+        }
+
+        .dna-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .dna-card {
+            position: relative;
+            aspect-ratio: 3/4;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .dna-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .dna-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .dna-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+        }
+
+        .dna-overlay h4 {
+            font-size: 1rem;
+            color: var(--gold);
+        }
+
+        /* Slide 6: Clustering */
+        #slide-clustering {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('clustering_visualization_premium_1777346047876.png');
+            background-size: cover;
+        }
+
+        .cluster-info {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--gold);
+            padding: 3rem;
+            border-radius: 2rem;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+        }
+
+        section:target .reveal, section.active .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .navigation {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot:hover, .nav-dot.active {
+            background: var(--gold);
+            transform: scale(1.3);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navigation">
+        <a href="#slide-cover" class="nav-dot active"></a>
+        <a href="#slide-architecture" class="nav-dot"></a>
+        <a href="#slide-scoring" class="nav-dot"></a>
+        <a href="#slide-report" class="nav-dot"></a>
+        <a href="#slide-dna" class="nav-dot"></a>
+        <a href="#slide-clustering" class="nav-dot"></a>
+    </div>
+
+    <div class="presentation-container">
+        
+        <!-- SLIDE 1: COVER -->
+        <section id="slide-cover" class="active">
+            <div class="hero-text reveal">
+                <p>Strategic Presentation Deck v2.7</p>
+                <h1>THE <span>SOVEREIGN</span> INSIGHT</h1>
+                <p>Youth Startup Flow Analysis Engine</p>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: SYSTEM ARCHITECTURE -->
+        <section id="slide-architecture">
+            <h2 class="reveal" style="margin-bottom: 3rem;">Multi-Platform Ecosystem</h2>
+            <div class="grid-container reveal">
+                <div class="card">
+                    <h3>Web Dashboard</h3>
+                    <ul>
+                        <li>React (Vite) + Tailwind CSS</li>
+                        <li>High-Resolution Geo-Data Visualization</li>
+                        <li>Dynamic Scenario Simulation</li>
+                        <li>Professional Report Generation</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Mobile Insight App</h3>
+                    <ul>
+                        <li>Flutter (Cross-Platform)</li>
+                        <li>Real-time Scouting & AR Support</li>
+                        <li>Persona-based Personalized Analysis</li>
+                        <li>On-the-go Commercial Monitoring</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: SCORING ENGINE -->
+        <section id="slide-scoring">
+            <h2 class="reveal">Integrated Scoring Engine Logic</h2>
+            <div class="score-logic reveal">
+                <div class="pillar">
+                    <h4>Population</h4>
+                    <p>행안부 실시간 거주/상주 인구 밀도 분석</p>
+                </div>
+                <div class="pillar">
+                    <h4>Demand</h4>
+                    <p>네이버 검색량 및 트렌드 검색어 데이터 마이닝</p>
+                </div>
+                <div class="pillar">
+                    <h4>Trend</h4>
+                    <p>네이버 블로그 감성 분석 및 SNS 언급 빈도</p>
+                </div>
+                <div class="pillar">
+                    <h4>Competition</h4>
+                    <p>서울시 상가 정보 및 업종별 생존율 시뮬레이션</p>
+                </div>
+            </div>
+            <div class="reveal" style="margin-top: 4rem; text-align: center;">
+                <h3 style="color: var(--gold);">Final Score = (Public 60% + SNS 40%)</h3>
+                <p style="opacity: 0.5;">고도화된 가중치 모델 v2.0 적용</p>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: PRECISION REPORT -->
+        <section id="slide-report">
+            <h2 class="reveal" style="margin-bottom: 2rem;">District Precision Report</h2>
+            <div class="mockup-container reveal">
+                <div class="mockup-header">
+                    <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                </div>
+                <div class="mockup-content">
+                    <div class="stats-sidebar">
+                        <div class="stat-item">
+                            <div class="stat-value">84.5</div>
+                            <div class="stat-label">AI Match Score</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">LOW</div>
+                            <div class="stat-label">Gentrification Risk</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">18m</div>
+                            <div class="stat-label">Est. BEP Period</div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--gold); margin-bottom: 1rem;">성수동 연무장길 분석 결과</h4>
+                        <p style="font-size: 1.1rem; line-height: 1.6; color: rgba(255,255,255,0.8);">
+                            "연무장길 상권은 현재 <strong>감성 폭발형</strong> 성장 단계의 초입에 위치해 있습니다. 
+                            브랜드 런칭 시 초기 6개월 내 바이럴 도달 확률이 85% 이상으로 예측됩니다."
+                        </p>
+                        <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.05); border-radius: 1rem;">
+                            <p style="font-size: 0.9rem; color: var(--gold);">💡 Strategic Advice</p>
+                            <p style="font-size: 0.8rem; opacity: 0.6;">인더스트리얼 빈티지 스타일의 인테리어와 MZ 타겟 마케팅 시너지 극대화 구역</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: VISUAL DNA -->
+        <section id="slide-dna">
+            <h2 class="reveal" style="margin-bottom: 3rem;">Visual DNA & Recommended Store</h2>
+            <div class="dna-grid reveal">
+                <div class="dna-card">
+                    <img src="backend/assets/visual_dna/SS_ID_02_Seongsu_Cafe_IndustrialVintage.jpg" alt="Industrial Vintage">
+                    <div class="dna-overlay">
+                        <h4>Industrial Vintage</h4>
+                        <p style="font-size: 0.7rem; opacity: 0.7;">Recommended for Seongsu District</p>
+                    </div>
+                </div>
+                <div class="dna-card">
+                    <img src="backend/assets/visual_dna/HN_MC_01_Hannam_Dining_ModernChic.jpg" alt="Modern Chic">
+                    <div class="dna-overlay">
+                        <h4>Modern Chic</h4>
+                        <p style="font-size: 0.7rem; opacity: 0.7;">Recommended for Hannam District</p>
+                    </div>
+                </div>
+                <div class="dna-card">
+                    <img src="backend/assets/visual_dna/HN_MN_01_Hannam_EditShop_MinimalBasic.jpg" alt="Minimal Basic">
+                    <div class="dna-overlay">
+                        <h4>Minimal Basic</h4>
+                        <p style="font-size: 0.7rem; opacity: 0.7;">Recommended for Lifestyle Retail</p>
+                    </div>
+                </div>
+                <div class="dna-card">
+                    <img src="backend/assets/visual_dna/SS_WW_01_Seongsu_Cafe_WarmWood.jpg" alt="Warm Wood">
+                    <div class="dna-overlay">
+                        <h4>Warm Wood & Natural</h4>
+                        <p style="font-size: 0.7rem; opacity: 0.7;">Recommended for Cozy Concept</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: CLUSTERING & FUTURE -->
+        <section id="slide-clustering">
+            <div class="cluster-info reveal">
+                <h2 style="color: var(--gold); margin-bottom: 1.5rem;">AI Clustering & Future Scenario</h2>
+                <p style="margin-bottom: 2rem; line-height: 1.6; opacity: 0.8;">
+                    서울시 공공데이터와 AI 분석 엔진 v2.7을 통해 도출된 업종별 밀집도 데이터입니다. 
+                    향후 3년 내 성수동은 패션/리테일 중심의 '슈퍼 클러스터'로 진화할 것이며, 
+                    한남동은 하이엔드 다이닝 중심의 '프리미엄 밸리'를 형성할 것으로 예측됩니다.
+                </p>
+                <div style="display: flex; justify-content: center; gap: 1rem;">
+                    <div style="padding: 1rem 2rem; background: var(--gold); color: black; font-weight: 900; border-radius: 0.5rem;">
+                        CLUSTERING DATA V2.7
+                    </div>
+                    <div style="padding: 1rem 2rem; border: 1px solid var(--gold); color: var(--gold); font-weight: 900; border-radius: 0.5rem;">
+                        FUTURE PREDICTION READY
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Simple scroll spy for navigation
+        const sections = document.querySelectorAll('section');
+        const navDots = document.querySelectorAll('.nav-dot');
+        const container = document.querySelector('.presentation-container');
+
+        container.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (container.scrollTop >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navDots.forEach(dot => {
+                dot.classList.remove('active');
+                if (dot.getAttribute('href').includes(current)) {
+                    dot.classList.add('active');
+                }
+            });
+        });
+
+        // Intersection Observer for reveal animations
+        const observerOptions = {
+            threshold: 0.2
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>

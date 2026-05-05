@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Flow: 성수·한남 상권 시각 DNA 솔루션] 브랜드 가이드라인 v1.2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-black: #000000;
+            --premium-gold: #D4AF37;
+            --text-white: #FFFFFF;
+            --text-gray: #A0A0A0;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .brand-tag {
+            color: var(--premium-gold);
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #FFFFFF, var(--premium-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin-bottom: 120px;
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            color: var(--premium-gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--premium-gold), transparent);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--glass);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: var(--premium-gold);
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            color: var(--premium-gold);
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: var(--text-gray);
+            font-size: 1rem;
+        }
+
+        .highlight-text {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 40px 0;
+            color: #FFFFFF;
+        }
+
+        .gold-glow {
+            color: var(--premium-gold);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .guide-steps {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 60px;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            padding: 30px;
+            border-bottom: 2px solid var(--glass);
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            border-bottom-color: var(--premium-gold);
+        }
+
+        .step-num {
+            font-size: 3rem;
+            font-weight: 900;
+            color: rgba(212, 175, 55, 0.1);
+            margin-bottom: -20px;
+            display: block;
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-white);
+            margin-bottom: 10px;
+        }
+
+        .footer-note {
+            margin-top: 150px;
+            padding: 40px;
+            border-top: 1px solid var(--glass);
+            text-align: center;
+            font-family: monospace;
+            color: var(--text-gray);
+            font-size: 0.85rem;
+        }
+
+        .tech-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border: 1px solid var(--premium-gold);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            color: var(--premium-gold);
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .guide-steps { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <span class="brand-tag">Premium Brand Guideline</span>
+            <h1>[Flow: 성수·한남 상권 시각 DNA 솔루션]</h1>
+            <p class="subtitle">전공자 팀을 뛰어넘는 정교한 기술력과 MZ세대 감각의 결합. 120만 명의 데이터를 하네싱하여 상권의 미래를 제안합니다.</p>
+        </header>
+
+        <section class="section">
+            <div class="section-title">Core Engine & Technology</div>
+            <div class="card" style="width: 100%; margin-bottom: 30px;">
+                <span class="tech-badge">PROPRIETARY TECH</span>
+                <h3>Harness Engine 기반 시각 DNA 추출</h3>
+                <p class="highlight-text">단순한 분석을 넘어, <span class="gold-glow">데이터 하네싱(Data Harnessing)</span>을 통해 상권의 숨겨진 비주얼 코드를 해독합니다.</p>
+                <p>120만 명의 청년 로그(Log) 데이터를 통합하여, 성수와 한남동의 트렌드 지각 변동을 실시간으로 추적하는 독보적인 기술력을 보유하고 있습니다.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-title">3-Step Quick Guide</div>
+            <div class="guide-steps">
+                <div class="step">
+                    <span class="step-num">01</span>
+                    <div class="step-title">접속 (Connect)</div>
+                    <p>플랫폼 즉시 연결 및 유저 세션 최적화</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">02</span>
+                    <div class="step-title">3초 현장 스캔 (Scan)</div>
+                    <p>실시간 비주얼 데이터 하네싱 가동</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">03</span>
+                    <div class="step-title">최종 판정 리포트 (Report)</div>
+                    <p>Gemini AI 기반 정밀 상권 DNA 분석 결과</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-title">Visual Identity</div>
+            <div class="grid">
+                <div class="card">
+                    <h3>Deep Black</h3>
+                    <div style="width: 100%; height: 50px; background: #000000; border-radius: 8px; margin-bottom: 15px; border: 1px solid var(--premium-gold);"></div>
+                    <p>신뢰와 전문성을 상징하는 다크 블랙 배경 (#000000)</p>
+                </div>
+                <div class="card">
+                    <h3>Premium Gold</h3>
+                    <div style="width: 100%; height: 50px; background: #D4AF37; border-radius: 8px; margin-bottom: 15px;"></div>
+                    <p>성공의 가치를 전달하는 핵심 강조 컬러 (#D4AF37)</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="footer-note">
+            <p>※ 하이브리드 데이터 증강 및 이미지 경로 인덱싱 기술 적용으로 저사양 기기 최적화 완료</p>
+            <p style="margin-top: 10px; opacity: 0.5;">[cite: 2026-04-27] Team Flow Engineering Division</p>
+        </div>
+    </div>
+</body>
+</html>

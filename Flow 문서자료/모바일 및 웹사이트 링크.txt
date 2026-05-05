@@ -1,0 +1,12 @@
+[최종 브랜드 및 URL 구성]
+
+1. 모바일 앱 (솔버린 AI - Sovereign Insight)
+   - 링크: https://the-sovereign-ai.web.app
+   - 특징: 럭셔리 다크 테마, 정밀 상권 분석 및 인사이트 엔진 (월 9,900원)
+
+2. 웹앱 (유스 스타트업 - Youth Startup Flow)
+   - 링크: https://youth-startup-flow.web.app
+   - 특징: 프리미엄 마블 테마, 젠트리피케이션 예측 및 창업 컨설팅 (월 29,900원)
+
+3. 테스트 버전 (카카오 테스트)
+   - 링크: https://kakao-test-77470.web.app

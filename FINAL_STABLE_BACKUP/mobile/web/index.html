@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        if (registrations.length > 0) {
+          for (let registration of registrations) {
+            registration.unregister();
+          }
+        }
+      });
+    }
+  </script>
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Sovereign AI">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+
+  <title>Sovereign AI</title>
+  <link rel="manifest" href="manifest.json">
+  <script>
+    // Dual-Layer Audio System for The Sovereign Insight
+    window.bgmPlayers = {
+      base: new Audio(),
+      layer: new Audio()
+    };
+
+    window.playBGM = function (url, volume, layer = 'base') {
+      console.log('--- playBGM Start ---');
+      console.log('Layer: ' + layer);
+      console.log('URL: ' + url);
+
+      const player = window.bgmPlayers[layer];
+      if (!player) return;
+
+      try {
+        player.pause();
+        player.src = url;
+        player.load();
+        player.loop = true;
+
+        player.onloadedmetadata = () => {
+          console.log("JS BGM Duration: " + player.duration);
+        };
+
+        // [CSI AUDIO POLISH] 150ms Fade-in to suppress 'pops' and 'crackles' at start/loop
+        player.volume = 0;
+        player.play().then(() => {
+          let vol = 0;
+          const targetVol = volume || 0.2;
+          const fadeInterval = setInterval(() => {
+            vol += 0.02;
+            if (vol >= targetVol) {
+              player.volume = targetVol;
+              clearInterval(fadeInterval);
+            } else {
+              player.volume = vol;
+            }
+          }, 20); // ~150ms total fade
+        }).catch(e => {
+          console.error('Playback failed:', e);
+        });
+      } catch (err) {
+        console.error('Error in playBGM:', err);
+      }
+    };
+
+    window.stopBGM = function (layer = 'base') {
+      const player = window.bgmPlayers[layer];
+      if (player) {
+        player.pause();
+        player.currentTime = 0;
+      }
+    };
+
+    window.setVolume = function (volume, layer = 'base') {
+      const player = window.bgmPlayers[layer];
+      if (player) player.volume = volume;
+    };
+  </script>
+</head>
+
+<body>
+  <!--
+    You can customize the "flutter_bootstrap.js" script.
+    This is useful to provide a custom configuration to the Flutter loader
+    or to give the user feedback during the initialization process.
+
+    For more details:
+    * https://docs.flutter.dev/platform-integration/web/initialization
+  -->
+  <script src="flutter_bootstrap.js?v=202605030450" async></script>
+</body>
+
+</html>

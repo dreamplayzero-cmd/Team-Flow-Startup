@@ -1,0 +1,32 @@
+# UPDATE LOG (MZ 상권분석 앱)
+
+## [2026-04-16]
+- 프로젝트 구조 정의 및 기본 문서(CLAUDE.md, TASK_CHECKLIST.txt, MZ_APP_MASTER_PLAN.md) 생성
+- SQLite DB 스키마 설계 완료 (6대 핵심 테이블 + Master Area)
+- `DatabaseManager` 모듈형 클래스 구현 (Context Manager 적용)
+- SQL Injection 방지 및 Foreign Key 무결성 검증 완료
+- [Phase 1] 데이터 수집 모듈 4종 개발 완료 (인구, 상가, 블로그, 네이버 검색)
+- [Phase 2] 상권 점수 산출 공식 및 성공 확률 문구 생성 엔진 구현 완료
+- [Phase 2] 지역 6개소 확장 및 키워드 자동 생성 엔진 (`keyword_gen.py`) 구현
+- [Phase 3] PySide6 기반 프리미엄 다크 모드 UI 개발 완료
+- [Phase 3] 입력 -> 분석 -> 결과 리포트로 이어지는 전체 애플리케이션 플로우 통합
+- API 인증 보안을 위한 `.env` 기반 환경 변수 관리 적용
+
+## [2026-04-17]
+- [Pop] 행정안전부 주민등록 인구수 API 최신 스펙(`admmSexdAgePpltn`) 반영
+- [Store] ODCloud 기반 상가 정보 API 전환 및 파라미터(`page`, `perPage`) 최적화
+- [Auth] 403 Forbidden 에러 방지를 위해 Decoding Key 자동 unquote 및 Header 인증 방식 적용
+- [Engine] API 응답 구조 변경에 따른 유연한 데이터 파싱 로직(키워드 매칭) 도입
+- [DB] `schema.py` 내 `founder_inputs` 테이블 확장 (나이, 성별, 운영형태, 타겟 지정)
+- [UI] `ui/input_view.py` 창업자 10종 리스트업 및 지역 다중 선택(Checkbox) 기능 탑재
+- [Engine] `scoring_engine.py` 동적 가중치 알고리즘 적용
+- [Engine] 다중 상권 순회 점수 계산 및 1위 상권(🏆) 하이라이팅 기능 추가 (`main.py`)
+- [System] 데이터 자동화 수집 스레드(`core/workers.py`) 
+- [DB] `master_areas` 테이블 `area_name` 컬럼 추가 및 동기화 무결성 확보
+
+## [2026-04-17] (Late Update: Dual Logic Architecture)
+- [Architecture] 실시간 API 한계를 극복하기 위해 **"Dual Sync & Override"** 전술 도입. 디폴트(Auto)는 4대 요소 모두 API 기반 가동 (Store는 Fallback).
+- [Data] 290MB 전국 소상공인 상가 CSV 파일을 DB로 고속 직결하는 `csv_importer.py` 개발 완료 (메모리 최적화).
+- [UI] 관리자 대시보드(`admin_view.py`)에 파일 탐색기(QFileDialog) 연동 및 수동 CSV 업로드 메뉴 신설.
+- [Worker] UI Freezing 방지를 위해 `CsvImportWorker(QThread)` 생성하여 백그라운드에서 1.4만 개 상가 데이터 삽입 이벤트 비동기 처리.
+- [Engine] 0점 편향 문제를 해결하기 위해 검색량 정규분포 수정 등 로직 정교화.

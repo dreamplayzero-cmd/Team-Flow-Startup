@@ -1,0 +1,18 @@
+{
+  "projects": {
+    "default": "flow-project-2026"
+  },
+  "targets": {
+    "flow-project-2026": {
+      "hosting": {
+        "the-sovereign-ai": [
+          "the-sovereign-ai"
+        ],
+        "youth-startup-flow": [
+          "youth-startup-flow"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

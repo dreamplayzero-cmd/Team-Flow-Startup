@@ -1,0 +1,5 @@
+{
+    "PREMIUM_AREAS": ["한남동", "성수동", "가로수길"],
+    "NIGHT_BONUS_AREAS": ["이태원", "한남동"],
+    "NIGHT_PENALTY_AREAS": ["망원동", "연남동"]
+}
