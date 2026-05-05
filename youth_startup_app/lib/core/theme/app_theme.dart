@@ -9,6 +9,10 @@ class AppTheme {
   static const Color accent = Color(0xFF6366F1);     // 포인트 인디고
   static const Color textPrimary = Color(0xFFF8FAFC); // 밝은 회색 텍스트
   static const Color textSecondary = Color(0xFF94A3B8); // 보조 텍스트
+  
+  static const Color gradientStart = Color(0xFF0F172A);
+  static const Color gradientEnd = Color(0xFF1E293B);
+  static const Color cardBackground = Color(0xFF1E293B);
 
   static ThemeData get darkTheme {
     return ThemeData(
