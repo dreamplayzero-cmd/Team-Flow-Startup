@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="The Sovereign AI - Insight Engine Mobile Preview">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="The Sovereign AI">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>The Sovereign AI</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+  <!-- [CSI RESTORATION] Missing BGM Engine Implementation -->
+  <script>
+    window.audioLayers = { base: null, layer: null };
+
+    window.playBGM = function(url, volume, layer) {
+      if (layer === 'base') {
+        const masterFile = 'The_Sovereign_AI_Main_12s.mp3?v=final_13s_master';
+        const fallbackPaths = [
+          'assets/bgm/' + masterFile,
+          'assets/assets/bgm/' + masterFile,
+          '/assets/bgm/' + masterFile
+        ];
+
+        const playBaseWithFallback = (paths, index) => {
+          if (index >= paths.length) return;
+          const currentUrl = paths[index];
+          const audio = new Audio(currentUrl);
+          audio.loop = true;
+          // [CSI OPTIMIZE] Duck volume if a regional layer is already playing
+          audio.volume = window.audioLayers.layer ? 0.1 : 0.2;
+          
+          audio.play().then(() => {
+            console.log("CSI SUCCESS: Main BGM Playing via Path [" + index + "]");
+            window.audioLayers.base = audio;
+          }).catch(e => {
+            playBaseWithFallback(paths, index + 1);
+          });
+        };
+
+        if (window.audioLayers.base) {
+          window.audioLayers.base.pause();
+          window.audioLayers.base.src = ""; // [CSI OPTIMIZE] Free memory
+          window.audioLayers.base = null;
+        }
+        playBaseWithFallback(fallbackPaths, 0);
+
+      } else {
+        // [CSI LAYER OPTIMIZE]
+        if (window.audioLayers.layer) {
+          window.audioLayers.layer.pause();
+          window.audioLayers.layer.src = ""; // [CSI OPTIMIZE] Free memory
+          window.audioLayers.layer = null;
+        }
+
+        const cleanUrl = url.split('?')[0];
+        const fileName = cleanUrl.split('/').pop();
+        const masterTimestamp = '?v=final_13s_master';
+
+        const fallbackPaths = [
+          'assets/bgm/' + fileName + masterTimestamp,
+          'assets/assets/bgm/' + fileName + masterTimestamp,
+          '/assets/bgm/' + fileName + masterTimestamp
+        ];
+
+        const playLayerWithFallback = (paths, index) => {
+          if (index >= paths.length) return;
+          const currentUrl = paths[index];
+          const audio = new Audio(currentUrl);
+          audio.loop = true;
+          audio.volume = 0.2;
+          
+          audio.play().then(() => {
+            console.log("CSI SUCCESS: Regional [" + fileName + "] Playing");
+            window.audioLayers.layer = audio;
+            // [CSI OPTIMIZE] Duck base volume when layer starts
+            if (window.audioLayers.base) window.audioLayers.base.volume = 0.1;
+          }).catch(e => {
+            playLayerWithFallback(paths, index + 1);
+          });
+        };
+        playLayerWithFallback(fallbackPaths, 0);
+      }
+    };
+
+    window.stopBGM = function(layer) {
+      if (layer === 'base' && window.audioLayers.base) {
+        window.audioLayers.base.pause();
+        window.audioLayers.base.src = "";
+        window.audioLayers.base = null;
+      } else if (window.audioLayers.layer) {
+        window.audioLayers.layer.pause();
+        window.audioLayers.layer.src = "";
+        window.audioLayers.layer = null;
+        // [CSI OPTIMIZE] Restore base volume when layer stops
+        if (window.audioLayers.base) window.audioLayers.base.volume = 0.2;
+      }
+    };
+
+    window.setVolume = function(volume, layer) {
+      const target = (layer === 'base') ? window.audioLayers.base : window.audioLayers.layer;
+      if (target) {
+        // Ensure manual volume changes respect the 0.2 ceiling
+        target.volume = Math.min(volume, 0.2);
+      }
+    };
+  </script>
+  <script src="flutter_bootstrap.js?v=1777812551914" async></script>
+</body>
+</html>
